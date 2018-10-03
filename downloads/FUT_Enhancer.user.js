@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        FUT Enhancer
-// @version     1.2.0
+// @version     1.3.0
 // @description Enhances the FIFA Ultimate Team 19 Web app. Includes Futbin integration and other useful tools
 // @license     MIT
 // @author      Tim Klingeleers
@@ -3375,6 +3375,7 @@ var FutbinSettings = exports.FutbinSettings = function (_SettingsEntry) {
     var _this = _possibleConstructorReturn(this, (FutbinSettings.__proto__ || Object.getPrototypeOf(FutbinSettings)).call(this, 'futbin', 'FutBIN integration'));
 
     _this.addSetting('Show link to player page', 'show-link-to-player', 'false');
+    _this.addSetting('Mark bargains', 'show-bargains', 'false');
     return _this;
   }
 
@@ -4799,7 +4800,6 @@ import {
 /* globals onVisibilityChanged services FUINavigationController UTObservable window document $ */
 window.onPageNavigation = new UTObservable();
 /*
-  RefreshListSettings,
   RemoveSoldAuctionsSettings,
   RelistAuctionsSettings,
 */
@@ -4827,7 +4827,7 @@ services.Authentication._oAuthentication.observe(undefined, function () {
   document.removeEventListener('visibilitychange', onVisibilityChanged);
 
   var settings = _core.Settings.getInstance();
-  // settings.registerEntry(new RefreshListSettings());
+  settings.registerEntry(new _transferlist.RefreshListSettings());
   // settings.registerEntry(new RemoveSoldAuctionsSettings());
   // settings.registerEntry(new RelistAuctionsSettings());
   settings.registerEntry(new _transferlist.MinBinSettings());
@@ -12201,7 +12201,11 @@ var TransferMarket = exports.TransferMarket = function () {
 
               case 12:
 
-                this._logger.log('Min buy for ' + item.type + ' ' + item._staticData.name + ' is ' + minBuy, 'Core - Transfermarket');
+                if (minBuy === 0) {
+                  this._logger.log('No players found... it might be extinct', 'Core - Transfermarket');
+                } else {
+                  this._logger.log('Min buy for ' + item.type + ' ' + item._staticData.name + ' is ' + minBuy, 'Core - Transfermarket');
+                }
                 return _context3.abrupt('return', minBuy);
 
               case 14:
@@ -12525,9 +12529,17 @@ var TransferMarket = exports.TransferMarket = function () {
                   return a - b;
                 }).slice(0, itemsForMean);
 
+                if (!(valuesFound.length > 0)) {
+                  _context7.next = 37;
+                  break;
+                }
+
                 return _context7.abrupt('return', _priceTiers2.default.roundValueToNearestPriceTiers((0, _mathStatistics.mean)(valuesFound)));
 
-              case 36:
+              case 37:
+                return _context7.abrupt('return', 0);
+
+              case 38:
               case 'end':
                 return _context7.stop();
             }
@@ -12556,10 +12568,17 @@ var TransferMarket = exports.TransferMarket = function () {
       searchCriteria.maskedDefId = item.getMaskedResourceId();
       searchCriteria.type = item.type;
 
-      // if it is TOTW or other special, set it to TOTW. See enums.ItemRareType.
-      // Can only search for "Specials", not more specific on Rare Type
-      if (item.rareflag >= 3) {
+      if (item.rareflag === 47) {
+        // 47 = Champions
+        // if it is a Champions card, this is seen as a gold card
+        // Can only search for "Gold" in this case
+        searchCriteria.level = factories.DataProvider.getItemLevelDP(true).filter(function (d) {
+          return d.id === 2;
+        })[0].value;
+      } else if (item.rareflag >= 3) {
         // 3 = TOTW
+        // if it is TOTW or other special, set it to TOTW. See enums.ItemRareType.
+        // Can only search for "Specials", not more specific on Rare Type
         searchCriteria.level = factories.DataProvider.getItemLevelDP(true).filter(function (d) {
           return d.id === 3;
         })[0].value;
@@ -12835,7 +12854,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* globals gNavManager $ */
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* globals $ */
 
 var RefreshListSettings = exports.RefreshListSettings = function (_SettingsEntry) {
   _inherits(RefreshListSettings, _SettingsEntry);
@@ -12876,7 +12895,7 @@ var RefreshTransferList = function (_BaseScript) {
     key: 'deactivate',
     value: function deactivate(state) {
       _get(RefreshTransferList.prototype.__proto__ || Object.getPrototypeOf(RefreshTransferList.prototype), 'deactivate', this).call(this, state);
-      $('#header').find('.subTitle').find('.refreshList').remove();
+      $('#header').find('.subTitle').find('.refresh').remove();
     }
 
     /* eslint-disable class-methods-use-this */
@@ -12885,13 +12904,13 @@ var RefreshTransferList = function (_BaseScript) {
     key: '_show',
     value: function _show(event) {
       switch (event) {
-        case 'TradePile':
-        case 'SearchResults':
+        case 'UTMarketSearchResultsSplitViewController':
+          // market search
           setTimeout(function () {
-            if ($('#header .subTitle').find('.refreshList').length === 0) {
-              $('#header').find('.subTitle').append('<a class="btn-flat next refreshList" style="float: right">Refresh list</a>');
-              $('.refreshList').click(function () {
-                gNavManager.getCurrentScreenController()._controller._listController._requestItems();
+            if ($('.pagingContainer').find('.refresh').length === 0) {
+              $('.pagingContainer').append('<button class="flat pagination refresh" style="float: right;">Refresh list</button>');
+              $('.refresh').click(function () {
+                getAppMain().getRootViewController().getPresentedViewController().getCurrentViewController().getCurrentController()._listController._requestItems();
               });
             }
           }, 1000);
@@ -13391,7 +13410,7 @@ var MinBin = function (_BaseScript) {
           $(mutation.target).find('.DetailPanel > .ut-button-group').prepend('<button id="searchMinBin" data-resource-id="' + selectedItem.resourceId + '" class="list"><span class="btn-text">Search minimum BIN ' + price + '</span><span class="btn-subtext"></span></button>');
 
           $('#searchMinBin').bind('click', _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-            var btn, settings, minimumBin, playerPrice;
+            var btn, settings, minimumBin, playerPrice, notificationText;
             return regeneratorRuntime.wrap(function _callee$(_context) {
               while (1) {
                 switch (_context.prev = _context.next) {
@@ -13420,14 +13439,21 @@ var MinBin = function (_BaseScript) {
 
                     selectedItem = _this4._getSelectedItem();
 
-                    if (btn.data('resource-id') === selectedItem.resourceId) {
-                      btn.find('.btn-text').html('Search minimum BIN (' + minimumBin + ')');
+                    notificationText = 'Minimum BIN found for ' + selectedItem._staticData.name + ' is ' + minimumBin;
 
-                      _this4._updateListPrice(minimumBin);
+                    if (btn.data('resource-id') === selectedItem.resourceId) {
+                      if (minimumBin === 0) {
+                        btn.find('.btn-text').html('Search minimum BIN (extinct)');
+                        notificationText = 'Minimum BIN not found for ' + selectedItem._staticData.name + ', card may be extinct';
+                      } else {
+                        btn.find('.btn-text').html('Search minimum BIN (' + minimumBin + ')');
+
+                        _this4._updateListPrice(minimumBin);
+                      }
                     }
 
                     GM_notification({
-                      text: 'Minimum BIN found for ' + selectedItem._staticData.name + ' is ' + minimumBin,
+                      text: notificationText,
                       title: 'FUT 19 Web App',
                       timeout: 5000,
                       onclick: function onclick() {
@@ -13435,7 +13461,7 @@ var MinBin = function (_BaseScript) {
                       }
                     });
 
-                  case 13:
+                  case 14:
                   case 'end':
                     return _context.stop();
                 }
@@ -13979,7 +14005,7 @@ exports = module.exports = __webpack_require__(65)(undefined);
 
 
 // module
-exports.push([module.i, ".item.player.small.TOTW .infoTab-extra,\n.item.player.small.OTW .infoTab-extra,\n.item.player.small.TOTS .infoTab-extra,\n.item.player.small.TOTY .infoTab-extra,\n.item.player.small.legend .infoTab-extra {\n  color: white; }\n\n.item.player.small .infoTab-extra {\n  width: 100%;\n  height: 100%; }\n", ""]);
+exports.push([module.i, ".item.player.small.TOTW .infoTab-extra,\n.item.player.small.OTW .infoTab-extra,\n.item.player.small.TOTS .infoTab-extra,\n.item.player.small.TOTY .infoTab-extra,\n.item.player.small.legend .infoTab-extra {\n  color: white; }\n\n.item.player.small .infoTab-extra {\n  width: 100%;\n  height: 100%;\n  position: absolute; }\n", ""]);
 
 // exports
 
@@ -14153,7 +14179,7 @@ exports = module.exports = __webpack_require__(65)(undefined);
 
 
 // module
-exports.push([module.i, "#TradePile .player-stats-data-component, #Unassigned .player-stats-data-component {\n  width: 12em; }\n\n#TradePile .listFUTItem .entityContainer, #Unassigned .listFUTItem .entityContainer {\n  width: 45%; }\n\n#Unassigned .listFUTItem .auction .auctionValue, #Unassigned .listFUTItem .auction .auction-state {\n  display: none; }\n\n#Unassigned .listFUTItem .auction .auctionValue.futbin {\n  display: block;\n  float: right; }\n\n.MyClubResults .listFUTItem .auction {\n  display: block;\n  position: absolute;\n  right: 0; }\n\n.MyClubResults .listFUTItem .auction .auctionValue, .MyClubResults .listFUTItem .auction .auction-state {\n  width: 24%;\n  float: right;\n  padding-right: 1%;\n  display: none; }\n\n.MyClubResults .listFUTItem .auction .auctionValue.futbin {\n  display: block; }\n\n.listFUTItem .auction .auction-state {\n  width: 25%;\n  float: right; }\n\n.listFUTItem .auction .auctionValue {\n  width: 24%;\n  float: left;\n  padding-right: 1%; }\n\n.futbinupdate {\n  font-size: 14px;\n  clear: both;\n  display: block; }\n\n.coins.value.futbin {\n  -webkit-filter: hue-rotate(165deg);\n  filter: hue-rotate(165deg); }\n", ""]);
+exports.push([module.i, "#TradePile .player-stats-data-component, #Unassigned .player-stats-data-component {\n  width: 12em; }\n\n#TradePile .listFUTItem .entityContainer, #Unassigned .listFUTItem .entityContainer {\n  width: 45%; }\n\n#Unassigned .listFUTItem .auction .auctionValue, #Unassigned .listFUTItem .auction .auction-state {\n  display: none; }\n\n#Unassigned .listFUTItem .auction .auctionValue.futbin {\n  display: block;\n  float: right; }\n\n.MyClubResults .listFUTItem .auction {\n  display: block;\n  position: absolute;\n  right: 0; }\n\n.MyClubResults .listFUTItem .auction .auctionValue, .MyClubResults .listFUTItem .auction .auction-state {\n  width: 24%;\n  float: right;\n  padding-right: 1%;\n  display: none; }\n\n.MyClubResults .listFUTItem .auction .auctionValue.futbin {\n  display: block; }\n\n.listFUTItem .auction .auction-state {\n  width: 25%;\n  float: right; }\n\n.listFUTItem .auction .auctionValue {\n  width: 24%;\n  float: left;\n  padding-right: 1%; }\n\n.futbinupdate {\n  font-size: 14px;\n  clear: both;\n  display: block; }\n\n.coins.value.futbin {\n  -webkit-filter: hue-rotate(165deg);\n  filter: hue-rotate(165deg); }\n\n.listFUTItem.has-auction-data.futbin-bargain .rowContent {\n  background-color: #7ffe9445; }\n\n.listFUTItem.has-auction-data.selected.futbin-bargain .rowContent, .listFUTItem.has-auction-data.selected.futbin-bargain .rowContent.active {\n  background-color: #7ffe94;\n  color: #434853; }\n", ""]);
 
 // exports
 
@@ -14292,6 +14318,8 @@ var FutbinPrices = exports.FutbinPrices = function (_BaseScript) {
             return;
           }
 
+          var showBargains = _this2.getSettings()['show-bargains'] === 'true';
+
           var resourceIdMapping = [];
           listrows.forEach(function (row, index) {
             resourceIdMapping.push({
@@ -14312,7 +14340,7 @@ var FutbinPrices = exports.FutbinPrices = function (_BaseScript) {
             onload: function onload(res) {
               var futbinData = JSON.parse(res.response);
               resourceIdMapping.forEach(function (item) {
-                FutbinPrices._showFutbinPrice(item, futbinData);
+                FutbinPrices._showFutbinPrice(item, futbinData, showBargains);
               });
             }
           });
@@ -14329,7 +14357,7 @@ var FutbinPrices = exports.FutbinPrices = function (_BaseScript) {
   }], [{
     key: '_showFutbinPrice',
     value: function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(item, futbinData) {
+      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(item, futbinData, showBargain) {
         var target, playerId, platform, targetForButton, futbinText;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
@@ -14366,32 +14394,39 @@ var FutbinPrices = exports.FutbinPrices = function (_BaseScript) {
               case 9:
                 targetForButton = null;
 
+
+                if (showBargain) {
+                  if (item.item._auction.buyNowPrice < futbinData[playerId].prices[platform].LCPrice) {
+                    target.addClass('futbin-bargain');
+                  }
+                }
+
                 if (!(target.find('.futbin').length > 0)) {
-                  _context.next = 12;
+                  _context.next = 13;
                   break;
                 }
 
                 return _context.abrupt('return');
 
-              case 12:
+              case 13:
                 futbinText = 'Futbin BIN';
                 _context.t0 = window.currentPage;
-                _context.next = _context.t0 === 'UTTransferListSplitViewController' ? 16 : _context.t0 === 'UTWatchListSplitViewController' ? 16 : _context.t0 === 'UTUnassignedItemsSplitViewController' ? 16 : _context.t0 === 'ClubSearchResultsSplitViewController' ? 16 : _context.t0 === 'UTMarketSearchResultsSplitViewController' ? 16 : _context.t0 === 'SearchResults' ? 21 : 24;
+                _context.next = _context.t0 === 'UTTransferListSplitViewController' ? 17 : _context.t0 === 'UTWatchListSplitViewController' ? 17 : _context.t0 === 'UTUnassignedItemsSplitViewController' ? 17 : _context.t0 === 'ClubSearchResultsSplitViewController' ? 17 : _context.t0 === 'UTMarketSearchResultsSplitViewController' ? 17 : _context.t0 === 'SearchResults' ? 22 : 25;
                 break;
 
-              case 16:
+              case 17:
                 $('.secondary.player-stats-data-component').css('float', 'left');
                 targetForButton = target.find('.auction');
                 targetForButton.show();
                 targetForButton.prepend('\n        <div class="auctionValue futbin">\n          <span class="label">' + futbinText + '</span>\n          <span class="coins value">' + futbinData[playerId].prices[platform].LCPrice + '</span>\n          <span class="time" style="color: #acacc4;">' + futbinData[playerId].prices[platform].updated + '</span>\n        </div>');
-                return _context.abrupt('break', 24);
+                return _context.abrupt('break', 25);
 
-              case 21:
+              case 22:
                 targetForButton = target.find('.auctionValue').parent();
                 targetForButton.prepend('\n        <div class="auctionValue futbin">\n          <span class="label">' + futbinText + '</span>\n          <span class="coins value">' + futbinData[playerId].prices[platform].LCPrice + '</span>\n          <span class="time" style="color: #acacc4;">' + futbinData[playerId].prices[platform].updated + '</span>\n        </div>');
-                return _context.abrupt('break', 24);
+                return _context.abrupt('break', 25);
 
-              case 24:
+              case 25:
               case 'end':
                 return _context.stop();
             }
@@ -14399,7 +14434,7 @@ var FutbinPrices = exports.FutbinPrices = function (_BaseScript) {
         }, _callee, this);
       }));
 
-      function _showFutbinPrice(_x, _x2) {
+      function _showFutbinPrice(_x, _x2, _x3) {
         return _ref.apply(this, arguments);
       }
 
