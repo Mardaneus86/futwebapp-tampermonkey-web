@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        FUT Enhancer
-// @version     1.4.0
+// @version     1.4.1
 // @description Enhances the FIFA Ultimate Team 19 Web app. Includes Futbin integration and other useful tools
 // @license     MIT
 // @author      Tim Klingeleers
@@ -10324,6 +10324,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var handleFieldChange = function handleFieldChange(entry, setting, e) {
   if (setting.subsettings && setting.subsettings.length > 0) {
     entry.changeValue(setting.key, e.target.checked);
+  } else if (setting.type === 'checkbox') {
+    entry.changeValue(setting.key, e.target.checked);
   } else {
     entry.changeValue(setting.key, e.target.value);
   }
@@ -13968,11 +13970,11 @@ var CardInfo = function (_BaseScript) {
             }
 
             var info = '';
-            if (settings['show-fitness'] === 'true') {
+            if (settings['show-fitness'].toString() === 'true') {
               info += '<div class="fitness" style="position: absolute;left: 5px;bottom: -3px;">\n              F:' + items[index].fitness + '\n              </div>';
             }
 
-            if (settings['show-contracts'] === 'true') {
+            if (settings['show-contracts'].toString() === 'true') {
               info += '<div class="contracts" style="position: absolute;right: 5px;bottom: -3px;">\n              C:' + items[index].contract + '\n              </div>';
             }
 
@@ -14232,7 +14234,7 @@ var TransferTotals = function (_BaseScript) {
             return;
           }
 
-          if (!settings.isActive || settings['show-transfer-totals'] !== 'true') {
+          if (!settings.isActive || settings['show-transfer-totals'].toString() !== 'true') {
             return;
           }
 
@@ -14553,7 +14555,7 @@ var FutbinPrices = exports.FutbinPrices = function (_BaseScript) {
             return;
           }
 
-          var showBargains = _this2.getSettings()['show-bargains'] === 'true';
+          var showBargains = _this2.getSettings()['show-bargains'].toString() === 'true';
 
           var resourceIdMapping = [];
           listrows.forEach(function (row, index) {
@@ -14765,7 +14767,7 @@ var FutbinPlayerLinks = exports.FutbinPlayerLinks = function (_BaseScript) {
         var _this3 = this;
 
         if ($(mutation.target).hasClass('DetailView') && $(mutation.target).find('.DetailPanel') && mutation.addedNodes.length > 0) {
-          if (this.getSettings()['show-link-to-player'] !== 'true') {
+          if (this.getSettings()['show-link-to-player'].toString() !== 'true') {
             return;
           }
 
