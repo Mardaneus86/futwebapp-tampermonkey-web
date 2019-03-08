@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        FUT Enhancer
-// @version     1.4.1
+// @version     1.4.2
 // @description Enhances the FIFA Ultimate Team 19 Web app. Includes Futbin integration and other useful tools
 // @license     MIT
 // @author      Tim Klingeleers
@@ -12843,7 +12843,7 @@ var _cardInfo = __webpack_require__(367);
 
 var _listSize = __webpack_require__(370);
 
-var _transerTotals = __webpack_require__(371);
+var _transferTotals = __webpack_require__(371);
 
 exports.CardInfoSettings = _cardInfo.CardInfoSettings;
 exports.RefreshListSettings = _refreshList.RefreshListSettings;
@@ -12851,7 +12851,7 @@ exports.RelistAuctionsSettings = _relistExpired.RelistAuctionsSettings;
 exports.RemoveSoldAuctionsSettings = _removeSold.RemoveSoldAuctionsSettings;
 exports.MinBinSettings = _minBin.MinBinSettings;
 exports.ListSizeSettings = _listSize.ListSizeSettings;
-exports.TransferTotalsSettings = _transerTotals.TransferTotalsSettings;
+exports.TransferTotalsSettings = _transferTotals.TransferTotalsSettings;
 
 /***/ }),
 /* 363 */
@@ -14239,6 +14239,8 @@ var TransferTotals = function (_BaseScript) {
           }
 
           var lists = $('.list-view .itemList');
+          var items = controller._listController._viewmodel._collection;
+          var listRows = $('.list-view .listFUTItem');
 
           lists.each(function (index, list) {
             var totals = {
@@ -14252,16 +14254,24 @@ var TransferTotals = function (_BaseScript) {
               return;
             }
 
-            listEl.find('.listFUTItem').each(function (rowIndex, row) {
-              var rowEl = $(row);
-              var hasFutbin = rowEl.find('.auctionValue.futbin').length > 0;
-              var futbinValue = hasFutbin ? parseInt(rowEl.find('.auctionValue.futbin .coins.value').text().replace(/[,.]/g, ''), 10) : 0;
-              var bidValue = parseInt(rowEl.find('.auctionValue:eq(' + (hasFutbin ? 2 : 1) + ') .coins.value').text().replace(/[,.]/g, ''), 10) || 0;
-              var binValue = parseInt(rowEl.find('.auctionValue:eq(' + (hasFutbin ? 3 : 2) + ') .coins.value').text().replace(/[,.]/g, ''), 10) || 0;
-              totals.futbin += futbinValue;
-              totals.bid += bidValue;
-              totals.bin += binValue;
-            });
+            var firstIndex = $(list).find('.listFUTItem:first').index('.list-view .listFUTItem');
+            var lastIndex = $(list).find('.listFUTItem:last').index('.list-view .listFUTItem');
+
+            totals.futbin = items.slice(firstIndex, lastIndex + 1).reduce(function (sum, item, i) {
+              var futbin = parseInt(listRows.eq(i + firstIndex).find('.auctionValue.futbin .coins.value').text().replace(/[,.]/g, ''), 10) || 0;
+              return sum + futbin;
+            }, 0);
+            totals.bid = items.slice(firstIndex, lastIndex + 1).reduce(function (sum, item) {
+              var _item$_auction = item._auction,
+                  currentBid = _item$_auction.currentBid,
+                  startingBid = _item$_auction.startingBid;
+
+              var actualBid = currentBid > 0 ? currentBid : startingBid;
+              return sum + actualBid;
+            }, 0);
+            totals.bin = items.slice(firstIndex, lastIndex + 1).reduce(function (sum, item) {
+              return sum + item._auction.buyNowPrice;
+            }, 0);
 
             var totalsItem = listEl.prev('.transfer-totals');
 
@@ -14566,21 +14576,26 @@ var FutbinPrices = exports.FutbinPrices = function (_BaseScript) {
             });
           });
 
-          var futbinUrl = 'https://www.futbin.com/19/playerPrices?player=&all_versions=' + resourceIdMapping.map(function (i) {
-            return i.playerId;
-          }).filter(function (current, next) {
-            return current !== next;
-          }).join(',');
-          GM_xmlhttpRequest({
-            method: 'GET',
-            url: futbinUrl,
-            onload: function onload(res) {
-              var futbinData = JSON.parse(res.response);
-              resourceIdMapping.forEach(function (item) {
-                FutbinPrices._showFutbinPrice(item, futbinData, showBargains);
-              });
-            }
-          });
+          var fetchedPlayers = 0;
+          var fetchAtOnce = 30;
+          while (fetchedPlayers < resourceIdMapping.length) {
+            var futbinUrl = 'https://www.futbin.com/19/playerPrices?player=&all_versions=' + resourceIdMapping.slice(fetchedPlayers, fetchedPlayers + fetchAtOnce).map(function (i) {
+              return i.playerId;
+            }).filter(function (current, next) {
+              return current !== next;
+            }).join(',');
+            fetchedPlayers += fetchAtOnce;
+            GM_xmlhttpRequest({
+              method: 'GET',
+              url: futbinUrl,
+              onload: function onload(res) {
+                var futbinData = JSON.parse(res.response);
+                resourceIdMapping.forEach(function (item) {
+                  FutbinPrices._showFutbinPrice(item, futbinData, showBargains);
+                });
+              }
+            });
+          }
         }, 1000);
       } else {
         // no need to search prices on other pages
@@ -14663,7 +14678,7 @@ var FutbinPrices = exports.FutbinPrices = function (_BaseScript) {
               case 26:
 
                 if (showBargain) {
-                  if (item.item._auction && item.item._auction.buyNowPrice < futbinData[playerId].prices[platform].LCPrice) {
+                  if (item.item._auction && item.item._auction.buyNowPrice < futbinData[playerId].prices[platform].LCPrice.replace(/[,.]/g, '')) {
                     target.addClass('futbin-bargain');
                   }
                 }
