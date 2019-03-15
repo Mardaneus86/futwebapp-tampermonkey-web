@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        FUT Enhancer
-// @version     1.5.0
+// @version     1.5.1
 // @description Enhances the FIFA Ultimate Team 19 Web app. Includes Futbin integration and other useful tools
 // @license     MIT
 // @author      Tim Klingeleers
@@ -3374,6 +3374,7 @@ var FutbinSettings = exports.FutbinSettings = function (_SettingsEntry) {
     var _this = _possibleConstructorReturn(this, (FutbinSettings.__proto__ || Object.getPrototypeOf(FutbinSettings)).call(this, 'futbin', 'FutBIN integration'));
 
     _this.addSetting('Show link to player page', 'show-link-to-player', false, 'checkbox');
+    _this.addSetting('Show prices on SBC and Squad', 'show-sbc-squad', false, 'checkbox');
     _this.addSetting('Mark bargains', 'show-bargains', false, 'checkbox');
     return _this;
   }
@@ -13786,6 +13787,10 @@ var FutbinPrices = exports.FutbinPrices = function (_BaseScript) {
       var controllerName = getAppMain().getRootViewController().getPresentedViewController().getCurrentViewController().getCurrentController().className;
 
       if (screenId === 'SBCSquadSplitViewController' || screenId === 'SquadSplitViewController') {
+        if (this.getSettings()['show-sbc-squad'].toString() !== 'true') {
+          return;
+        }
+
         this._squadObserver = getAppMain().getRootViewController().getPresentedViewController().getCurrentViewController().getCurrentController()._leftController._squad.onDataUpdated.observe(this, function () {
           $('.squadSlotPedestal.futbin').remove(); // forces update
           _this2._show('SBCSquadSplitViewController', true);
@@ -13842,6 +13847,10 @@ var FutbinPrices = exports.FutbinPrices = function (_BaseScript) {
           var uiItems = null;
           if (screen === 'SBCSquadSplitViewController' || screen === 'SquadSplitViewController') {
             uiItems = $(controller._view.__root).find('.squadSlot');
+
+            if (_this3.getSettings()['show-sbc-squad'].toString() !== 'true') {
+              return;
+            }
           } else {
             uiItems = $(getAppMain().getRootViewController().getPresentedViewController().getCurrentViewController()._view.__root).find('.listFUTItem');
 
