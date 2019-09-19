@@ -1,5 +1,5 @@
 // ==UserScript==
-// @version    1.5.2
+// @version    1.6.0
 // @name    FUT Enhancer
 // @namespace    https://github.com/Mardaneus86
 // ==/UserScript==

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        FUT Enhancer
-// @version     1.5.2
-// @description Enhances the FIFA Ultimate Team 19 Web app. Includes Futbin integration and other useful tools
+// @version     1.6.0
+// @description Enhances the FIFA Ultimate Team 20 Web app. Includes Futbin integration and other useful tools
 // @license     MIT
 // @author      Tim Klingeleers
 // @match       https://www.easports.com/fifa/ultimate-team/web-app/*
@@ -4797,17 +4797,18 @@
   } from './club';
   */
   
-  /* globals onVisibilityChanged services FUINavigationController
-  FUIViewController UTObservable window document $ */
+  /* globals onVisibilityChanged services UTNavigationController
+  UTViewController UTObservable window document $ */
   window.onPageNavigation = new UTObservable();
   /*
     RemoveSoldAuctionsSettings,
     RelistAuctionsSettings,
   */
   
+  
   window.currentPage = '';
   
-  FUINavigationController.prototype.didPush = function (t) {
+  UTNavigationController.prototype.didPush = function (t) {
     if (t) {
       _core.analytics.trackPage(t.className);
       window.onPageNavigation.notify(t.className);
@@ -4815,7 +4816,7 @@
     }
   };
   
-  FUIViewController.prototype.didPresent = function (t) {
+  UTViewController.prototype.didPresent = function (t) {
     if (t) {
       _core.analytics.trackPage(t.className);
       window.onPageNavigation.notify(t.className);
@@ -10556,7 +10557,7 @@
   
   
   // module
-  exports.push([module.i, ".futsettings-toggle {\n  position: absolute !important;\n  bottom: 20px;\n  right: 20px;\n  z-index: 999; }\n  .futsettings-toggle ::before {\n    font-family: UltimateTeam-Icons,sans-serif;\n    content: \"\\F139\";\n    font-size: 2rem;\n    color: black; }\n\n.futsettings {\n  position: absolute;\n  top: 112px;\n  bottom: 0;\n  left: 105px;\n  right: 0;\n  background-color: #fff;\n  overflow-y: auto;\n  display: none;\n  z-index: 998;\n  padding: 15px; }\n  .futsettings, .futsettings *, .futsettings *:before, .futsettings *:after {\n    box-sizing: border-box; }\n  .futsettings footer {\n    text-align: center;\n    padding: 15px; }\n    .futsettings footer hr {\n      border: none;\n      border-bottom: 1px solid #ddd; }\n    .futsettings footer p, .futsettings footer li {\n      font-size: smaller;\n      margin: 10px; }\n  .futsettings .settings-title {\n    color: #183f94;\n    font-size: 2.5em;\n    font-weight: 400;\n    font-family: UltimateTeamCondensed,sans-serif;\n    line-height: 1em;\n    margin-bottom: 0.5rem;\n    text-transform: uppercase;\n    width: 100%; }\n  .futsettings .main-setting label {\n    display: inline-block;\n    padding-bottom: 15px;\n    padding-top: 15px; }\n  .futsettings .feature-settings-empty {\n    display: none; }\n  .futsettings .feature-settings {\n    background-color: #f5f5f5;\n    margin-bottom: 25px;\n    padding: 10px;\n    position: relative; }\n    .futsettings .feature-settings .setting {\n      padding: 10px; }\n      .futsettings .feature-settings .setting input[type=number],\n      .futsettings .feature-settings .setting input[type=text] {\n        background-color: #fff;\n        border: 1px #33314e solid;\n        clear: both;\n        color: #33314e;\n        display: block;\n        font-size: 14px;\n        height: 3.5em;\n        padding: 10px;\n        text-align: left;\n        width: 100%; }\n  .futsettings input[type=checkbox] {\n    display: none; }\n    .futsettings input[type=checkbox] + label {\n      cursor: pointer;\n      position: relative;\n      padding-left: 50px; }\n      .futsettings input[type=checkbox] + label:before {\n        background-color: #ccc;\n        border: 1px solid #999;\n        border-radius: 8px;\n        content: '';\n        height: 16px;\n        left: 0;\n        position: absolute;\n        transition: background-color 300ms ease, border-color 300ms ease;\n        width: 40px; }\n      .futsettings input[type=checkbox] + label:after {\n        background-color: #999;\n        border: 1px solid #999;\n        border-radius: 50%;\n        content: '';\n        height: 22px;\n        left: 0;\n        margin-top: -3px;\n        position: absolute;\n        transform: translateX(0);\n        transition: background-color 300ms ease, border-color 300ms ease, transform 300ms ease;\n        width: 22px; }\n    .futsettings input[type=checkbox]:checked + label:before {\n      background-color: #fc87ac;\n      border-color: #f93b78; }\n    .futsettings input[type=checkbox]:checked + label:after {\n      background-color: #f93b78;\n      border-color: #f93b78;\n      transform: translateX(20px); }\n", ""]);
+  exports.push([module.i, ".futsettings-toggle {\n  position: absolute !important;\n  bottom: 20px;\n  right: 20px;\n  z-index: 999; }\n  .futsettings-toggle ::before {\n    font-family: UltimateTeam-Icons,sans-serif;\n    content: \"\\E056\";\n    font-size: 2rem;\n    color: black; }\n\n.futsettings {\n  position: absolute;\n  top: 112px;\n  bottom: 0;\n  left: 105px;\n  right: 0;\n  background-color: #fff;\n  overflow-y: auto;\n  display: none;\n  z-index: 998;\n  padding: 15px; }\n  .futsettings, .futsettings *, .futsettings *:before, .futsettings *:after {\n    box-sizing: border-box; }\n  .futsettings footer {\n    text-align: center;\n    padding: 15px; }\n    .futsettings footer hr {\n      border: none;\n      border-bottom: 1px solid #ddd; }\n    .futsettings footer p, .futsettings footer li {\n      font-size: smaller;\n      margin: 10px; }\n  .futsettings .settings-title {\n    color: #183f94;\n    font-size: 2.5em;\n    font-weight: 400;\n    font-family: UltimateTeamCondensed,sans-serif;\n    line-height: 1em;\n    margin-bottom: 0.5rem;\n    text-transform: uppercase;\n    width: 100%; }\n  .futsettings .main-setting label {\n    display: inline-block;\n    padding-bottom: 15px;\n    padding-top: 15px; }\n  .futsettings .feature-settings-empty {\n    display: none; }\n  .futsettings .feature-settings {\n    background-color: #f5f5f5;\n    margin-bottom: 25px;\n    padding: 10px;\n    position: relative; }\n    .futsettings .feature-settings .setting {\n      padding: 10px; }\n      .futsettings .feature-settings .setting input[type=number],\n      .futsettings .feature-settings .setting input[type=text] {\n        background-color: #fff;\n        border: 1px #33314e solid;\n        clear: both;\n        color: #33314e;\n        display: block;\n        font-size: 14px;\n        height: 3.5em;\n        padding: 10px;\n        text-align: left;\n        width: 100%; }\n  .futsettings input[type=checkbox] {\n    display: none; }\n    .futsettings input[type=checkbox] + label {\n      cursor: pointer;\n      position: relative;\n      padding-left: 50px; }\n      .futsettings input[type=checkbox] + label:before {\n        background-color: #ccc;\n        border: 1px solid #999;\n        border-radius: 8px;\n        content: '';\n        height: 16px;\n        left: 0;\n        position: absolute;\n        transition: background-color 300ms ease, border-color 300ms ease;\n        width: 40px; }\n      .futsettings input[type=checkbox] + label:after {\n        background-color: #999;\n        border: 1px solid #999;\n        border-radius: 50%;\n        content: '';\n        height: 22px;\n        left: 0;\n        margin-top: -3px;\n        position: absolute;\n        transform: translateX(0);\n        transition: background-color 300ms ease, border-color 300ms ease, transform 300ms ease;\n        width: 22px; }\n    .futsettings input[type=checkbox]:checked + label:before {\n      background-color: #fc87ac;\n      border-color: #f93b78; }\n    .futsettings input[type=checkbox]:checked + label:after {\n      background-color: #f93b78;\n      border-color: #f93b78;\n      transform: translateX(20px); }\n", ""]);
   
   // exports
   
@@ -13102,7 +13103,7 @@
   
                       GM_notification({
                         text: notificationText,
-                        title: 'FUT 19 Web App',
+                        title: 'FUT 20 Web App',
                         timeout: 5000,
                         onclick: function onclick() {
                           return window.focus();
@@ -13944,7 +13945,7 @@
             var fetchAtOnce = 30;
             var futbinlist = [];
             while (resourceIdMapping.length > 0 && fetchedPlayers < resourceIdMapping.length && _core.Database.get('lastFutbinFetchFail', 0) + 5 * 60000 < Date.now()) {
-              var futbinUrl = 'https://www.futbin.com/19/playerPrices?player=&rids=' + resourceIdMapping.slice(fetchedPlayers, fetchedPlayers + fetchAtOnce).map(function (i) {
+              var futbinUrl = 'https://www.futbin.com/20/playerPrices?player=&rids=' + resourceIdMapping.slice(fetchedPlayers, fetchedPlayers + fetchAtOnce).map(function (i) {
                 return i.playerId;
               }).filter(function (current, next) {
                 return current !== next && current !== 0;
@@ -14253,11 +14254,11 @@
             return i.id === item.resourceId;
           });
           if (futbinPlayer != null) {
-            return resolve('https://www.futbin.com/19/player/' + futbinPlayer.futbinId);
+            return resolve('https://www.futbin.com/20/player/' + futbinPlayer.futbinId);
           }
   
           var name = (item._staticData.firstName + ' ' + item._staticData.lastName).replace(' ', '+');
-          var url = 'https://www.futbin.com/search?year=19&term=' + name;
+          var url = 'https://www.futbin.com/search?year=20&term=' + name;
           return GM_xmlhttpRequest({
             method: 'GET',
             url: url,
@@ -14285,10 +14286,10 @@
                   });
                 }
                 _core.Database.setJson('futbin-player-ids', futbinPlayerIds);
-                return resolve('https://www.futbin.com/19/player/' + exactPlayers[0].id);
+                return resolve('https://www.futbin.com/20/player/' + exactPlayers[0].id);
               } else if (exactPlayers.length > 1) {
                 // Take first one, several players are returned more than once
-                return resolve('https://www.futbin.com/19/player/' + exactPlayers[0].id);
+                return resolve('https://www.futbin.com/20/player/' + exactPlayers[0].id);
               }
   
               return resolve(null); // TODO: what should we do if we find more than one?
