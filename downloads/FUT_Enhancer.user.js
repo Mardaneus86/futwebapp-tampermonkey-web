@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        FUT Enhancer
-// @version     1.6.0
+// @version     1.6.1
 // @description Enhances the FIFA Ultimate Team 20 Web app. Includes Futbin integration and other useful tools
 // @license     MIT
 // @author      Tim Klingeleers
@@ -352,7 +352,7 @@
   /***/ (function(module, exports, __webpack_require__) {
   
   // to indexed object, toObject with fallback for non-array-like ES3 strings
-  var IObject = __webpack_require__(47);
+  var IObject = __webpack_require__(49);
   var defined = __webpack_require__(24);
   module.exports = function (it) {
     return IObject(defined(it));
@@ -363,7 +363,7 @@
   /* 16 */
   /***/ (function(module, exports, __webpack_require__) {
   
-  var pIE = __webpack_require__(48);
+  var pIE = __webpack_require__(50);
   var createDesc = __webpack_require__(32);
   var toIObject = __webpack_require__(15);
   var toPrimitive = __webpack_require__(23);
@@ -570,7 +570,7 @@
   // 5 -> Array#find
   // 6 -> Array#findIndex
   var ctx = __webpack_require__(19);
-  var IObject = __webpack_require__(47);
+  var IObject = __webpack_require__(49);
   var toObject = __webpack_require__(9);
   var toLength = __webpack_require__(8);
   var asc = __webpack_require__(87);
@@ -632,7 +632,7 @@
     var toAbsoluteIndex = __webpack_require__(36);
     var toPrimitive = __webpack_require__(23);
     var has = __webpack_require__(11);
-    var classof = __webpack_require__(49);
+    var classof = __webpack_require__(51);
     var isObject = __webpack_require__(4);
     var toObject = __webpack_require__(9);
     var isArrayIter = __webpack_require__(84);
@@ -1484,54 +1484,6 @@
   
   /***/ }),
   /* 47 */
-  /***/ (function(module, exports, __webpack_require__) {
-  
-  // fallback for non-array-like ES3 and non-enumerable old V8 strings
-  var cof = __webpack_require__(20);
-  // eslint-disable-next-line no-prototype-builtins
-  module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
-    return cof(it) == 'String' ? it.split('') : Object(it);
-  };
-  
-  
-  /***/ }),
-  /* 48 */
-  /***/ (function(module, exports) {
-  
-  exports.f = {}.propertyIsEnumerable;
-  
-  
-  /***/ }),
-  /* 49 */
-  /***/ (function(module, exports, __webpack_require__) {
-  
-  // getting tag from 19.1.3.6 Object.prototype.toString()
-  var cof = __webpack_require__(20);
-  var TAG = __webpack_require__(5)('toStringTag');
-  // ES3 wrong here
-  var ARG = cof(function () { return arguments; }()) == 'Arguments';
-  
-  // fallback for IE11 Script Access Denied error
-  var tryGet = function (it, key) {
-    try {
-      return it[key];
-    } catch (e) { /* empty */ }
-  };
-  
-  module.exports = function (it) {
-    var O, T, B;
-    return it === undefined ? 'Undefined' : it === null ? 'Null'
-      // @@toStringTag case
-      : typeof (T = tryGet(O = Object(it), TAG)) == 'string' ? T
-      // builtinTag case
-      : ARG ? cof(O)
-      // ES3 arguments fallback
-      : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
-  };
-  
-  
-  /***/ }),
-  /* 50 */
   /***/ (function(module, exports) {
   
   /*
@@ -1613,7 +1565,7 @@
   
   
   /***/ }),
-  /* 51 */
+  /* 48 */
   /***/ (function(module, exports, __webpack_require__) {
   
   /*
@@ -1982,6 +1934,54 @@
   
     if(oldSrc) URL.revokeObjectURL(oldSrc);
   }
+  
+  
+  /***/ }),
+  /* 49 */
+  /***/ (function(module, exports, __webpack_require__) {
+  
+  // fallback for non-array-like ES3 and non-enumerable old V8 strings
+  var cof = __webpack_require__(20);
+  // eslint-disable-next-line no-prototype-builtins
+  module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
+    return cof(it) == 'String' ? it.split('') : Object(it);
+  };
+  
+  
+  /***/ }),
+  /* 50 */
+  /***/ (function(module, exports) {
+  
+  exports.f = {}.propertyIsEnumerable;
+  
+  
+  /***/ }),
+  /* 51 */
+  /***/ (function(module, exports, __webpack_require__) {
+  
+  // getting tag from 19.1.3.6 Object.prototype.toString()
+  var cof = __webpack_require__(20);
+  var TAG = __webpack_require__(5)('toStringTag');
+  // ES3 wrong here
+  var ARG = cof(function () { return arguments; }()) == 'Arguments';
+  
+  // fallback for IE11 Script Access Denied error
+  var tryGet = function (it, key) {
+    try {
+      return it[key];
+    } catch (e) { /* empty */ }
+  };
+  
+  module.exports = function (it) {
+    var O, T, B;
+    return it === undefined ? 'Undefined' : it === null ? 'Null'
+      // @@toStringTag case
+      : typeof (T = tryGet(O = Object(it), TAG)) == 'string' ? T
+      // builtinTag case
+      : ARG ? cof(O)
+      // ES3 arguments fallback
+      : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
+  };
   
   
   /***/ }),
@@ -2788,7 +2788,7 @@
   /* 86 */
   /***/ (function(module, exports, __webpack_require__) {
   
-  var classof = __webpack_require__(49);
+  var classof = __webpack_require__(51);
   var ITERATOR = __webpack_require__(5)('iterator');
   var Iterators = __webpack_require__(45);
   module.exports = __webpack_require__(22).getIteratorMethod = function (it) {
@@ -3503,9 +3503,9 @@
   // 19.1.2.1 Object.assign(target, source, ...)
   var getKeys = __webpack_require__(35);
   var gOPS = __webpack_require__(54);
-  var pIE = __webpack_require__(48);
+  var pIE = __webpack_require__(50);
   var toObject = __webpack_require__(9);
-  var IObject = __webpack_require__(47);
+  var IObject = __webpack_require__(49);
   var $assign = Object.assign;
   
   // should work with symbols and should have deterministic property order (V8 bug)
@@ -3704,7 +3704,7 @@
   
   var aFunction = __webpack_require__(10);
   var toObject = __webpack_require__(9);
-  var IObject = __webpack_require__(47);
+  var IObject = __webpack_require__(49);
   var toLength = __webpack_require__(8);
   
   module.exports = function (that, callbackfn, aLen, memo, isRight) {
@@ -4278,7 +4278,7 @@
   
   var getKeys = __webpack_require__(35);
   var toIObject = __webpack_require__(15);
-  var isEnum = __webpack_require__(48).f;
+  var isEnum = __webpack_require__(50).f;
   module.exports = function (isEntries) {
     return function (it) {
       var O = toIObject(it);
@@ -4299,7 +4299,7 @@
   /***/ (function(module, exports, __webpack_require__) {
   
   // https://github.com/DavidBruant/Map-Set.prototype.toJSON
-  var classof = __webpack_require__(49);
+  var classof = __webpack_require__(51);
   var from = __webpack_require__(128);
   module.exports = function (NAME) {
     return function toJSON() {
@@ -4683,10 +4683,10 @@
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  /* global utils views */
+  /* global utils UTCurrencyInputControl */
   exports.default = {
     roundValueToNearestPriceTiers: function roundValueToNearestPriceTiers(value) {
-      var tier = utils.JS.find(views.controls.CurrencyInput.PRICE_TIERS, function (i) {
+      var tier = utils.JS.find(UTCurrencyInputControl.PRICE_TIERS, function (i) {
         return value > i.min;
       });
   
@@ -4700,7 +4700,7 @@
       return value + (tier.inc - diff);
     },
     roundDownToNearestPriceTiers: function roundDownToNearestPriceTiers(value) {
-      var tier = utils.JS.find(views.controls.CurrencyInput.PRICE_TIERS, function (i) {
+      var tier = utils.JS.find(UTCurrencyInputControl.PRICE_TIERS, function (i) {
         return value > i.min;
       });
   
@@ -4712,7 +4712,7 @@
       return value - diff;
     },
     determineListPrice: function determineListPrice(start, buyNow) {
-      var tier = utils.JS.find(views.controls.CurrencyInput.PRICE_TIERS, function (i) {
+      var tier = utils.JS.find(UTCurrencyInputControl.PRICE_TIERS, function (i) {
         return buyNow > i.min;
       });
   
@@ -4785,9 +4785,9 @@
   
   var _transferlist = __webpack_require__(362);
   
-  var _futbin = __webpack_require__(372);
+  var _futbin = __webpack_require__(374);
   
-  var _instantBinConfirm = __webpack_require__(377);
+  var _instantBinConfirm = __webpack_require__(379);
   
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
   
@@ -4807,6 +4807,11 @@
   
   
   window.currentPage = '';
+  
+  // prevent debugger trap
+  setInterval(function () {
+    _0x1a026c = function _0x1a026c() {}; // eslint-disable-line no-global-assign, no-undef
+  }, 500);
   
   UTNavigationController.prototype.didPush = function (t) {
     if (t) {
@@ -5241,7 +5246,7 @@
     $GOPD.f = $getOwnPropertyDescriptor;
     $DP.f = $defineProperty;
     __webpack_require__(38).f = gOPNExt.f = $getOwnPropertyNames;
-    __webpack_require__(48).f = $propertyIsEnumerable;
+    __webpack_require__(50).f = $propertyIsEnumerable;
     __webpack_require__(54).f = $getOwnPropertySymbols;
   
     if (DESCRIPTORS && !__webpack_require__(34)) {
@@ -5335,7 +5340,7 @@
   // all enumerable object keys, includes symbols
   var getKeys = __webpack_require__(35);
   var gOPS = __webpack_require__(54);
-  var pIE = __webpack_require__(48);
+  var pIE = __webpack_require__(50);
   module.exports = function (it) {
     var result = getKeys(it);
     var getSymbols = gOPS.f;
@@ -5564,7 +5569,7 @@
   "use strict";
   
   // 19.1.3.6 Object.prototype.toString()
-  var classof = __webpack_require__(49);
+  var classof = __webpack_require__(51);
   var test = {};
   test[__webpack_require__(5)('toStringTag')] = 'z';
   if (test + '' != '[object z]') {
@@ -6838,7 +6843,7 @@
   var arrayJoin = [].join;
   
   // fallback for not array-like strings
-  $export($export.P + $export.F * (__webpack_require__(47) != Object || !__webpack_require__(21)(arrayJoin)), 'Array', {
+  $export($export.P + $export.F * (__webpack_require__(49) != Object || !__webpack_require__(21)(arrayJoin)), 'Array', {
     join: function join(separator) {
       return arrayJoin.call(toIObject(this), separator === undefined ? ',' : separator);
     }
@@ -7393,7 +7398,7 @@
   var LIBRARY = __webpack_require__(34);
   var global = __webpack_require__(2);
   var ctx = __webpack_require__(19);
-  var classof = __webpack_require__(49);
+  var classof = __webpack_require__(51);
   var $export = __webpack_require__(0);
   var isObject = __webpack_require__(4);
   var aFunction = __webpack_require__(10);
@@ -10173,7 +10178,7 @@
   var options = {"hmr":true}
   options.transform = transform
   // add the styles to the DOM
-  var update = __webpack_require__(51)(content, options);
+  var update = __webpack_require__(48)(content, options);
   if(content.locals) module.exports = content.locals;
   // Hot Module Replacement
   if(false) {
@@ -10193,12 +10198,12 @@
   /* 341 */
   /***/ (function(module, exports, __webpack_require__) {
   
-  exports = module.exports = __webpack_require__(50)(undefined);
+  exports = module.exports = __webpack_require__(47)(undefined);
   // imports
   
   
   // module
-  exports.push([module.i, ".ut-content-container {\n  padding: 0; }\n  .ut-content-container .ut-content {\n    border: 0; }\n    .ut-content-container .ut-content.ut-content--split-view-extend {\n      max-height: 100%; }\n\n.listFUTItem .entityContainer .name.untradeable {\n  display: block; }\n  .listFUTItem .entityContainer .name.untradeable::before {\n    position: relative;\n    padding-right: 10px; }\n", ""]);
+  exports.push([module.i, ".ut-content-container {\n  padding: 0; }\n  .ut-content-container .ut-content {\n    border: 0; }\n    .ut-content-container .ut-content.ut-content--split-view-extend {\n      max-height: 100%; }\n\n.listFUTItem .entityContainer .name.untradeable {\n  display: block; }\n  .listFUTItem .entityContainer .name.untradeable::before {\n    position: relative;\n    padding-right: 10px; }\n\n.ut-club-search-results-view .listFUTItem .entityContainer {\n  width: 45%; }\n\n@media (min-width: 1281px) {\n  .ut-content-container .ut-content {\n    max-width: 100%;\n    max-height: 100%; }\n  .ut-split-view .ut-content {\n    max-width: 100%;\n    max-height: 100%; } }\n", ""]);
   
   // exports
   
@@ -10532,7 +10537,7 @@
   var options = {"hmr":true}
   options.transform = transform
   // add the styles to the DOM
-  var update = __webpack_require__(51)(content, options);
+  var update = __webpack_require__(48)(content, options);
   if(content.locals) module.exports = content.locals;
   // Hot Module Replacement
   if(false) {
@@ -10552,7 +10557,7 @@
   /* 345 */
   /***/ (function(module, exports, __webpack_require__) {
   
-  exports = module.exports = __webpack_require__(50)(undefined);
+  exports = module.exports = __webpack_require__(47)(undefined);
   // imports
   
   
@@ -12081,7 +12086,7 @@
   exports.TransferMarket = undefined;
   
   var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /* globals
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       enums transferobjects factories communication gUserModel models repositories
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       enums transferobjects factories communication gUserModel models repositories services
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        */
   
   
@@ -12616,18 +12621,14 @@
         var _this4 = this;
   
         return new Promise(function (resolve, reject) {
-          var o = new communication.SearchAuctionDelegate(searchCriteria);
-          o.useClickShield(false);
-          o.addListener(communication.BaseDelegate.SUCCESS, _this4, function (sender, response) {
-            sender.clearListenersByScope(_this4);
-            var t = factories.Item.generateItemsFromAuctionData(response.auctionInfo || [], response.duplicateItemIdList || []);
-            resolve(t);
+          services.Item.searchTransferMarket(searchCriteria, 1).observe(_this4, function (obs, res) {
+            if (!res.success) {
+              obs.unobserve(this);
+              reject(res.status);
+            } else {
+              resolve(res.data.items);
+            }
           });
-          o.addListener(communication.BaseDelegate.FAIL, _this4, function (sender, error) {
-            sender.clearListenersByScope(_this4);
-            reject(error);
-          });
-          o.send();
         });
       }
     }]);
@@ -12831,13 +12832,13 @@
   
   var _refreshList = __webpack_require__(363);
   
-  var _minBin = __webpack_require__(364);
+  var _minBin = __webpack_require__(366);
   
-  var _cardInfo = __webpack_require__(365);
+  var _cardInfo = __webpack_require__(367);
   
-  var _listSize = __webpack_require__(368);
+  var _listSize = __webpack_require__(370);
   
-  var _transferTotals = __webpack_require__(369);
+  var _transferTotals = __webpack_require__(371);
   
   exports.CardInfoSettings = _cardInfo.CardInfoSettings;
   exports.RefreshListSettings = _refreshList.RefreshListSettings;
@@ -12862,6 +12863,8 @@
   var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
   
   var _core = __webpack_require__(18);
+  
+  __webpack_require__(364);
   
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
   
@@ -12943,6 +12946,51 @@
   
   /***/ }),
   /* 364 */
+  /***/ (function(module, exports, __webpack_require__) {
+  
+  // style-loader: Adds some css to the DOM by adding a <style> tag
+  
+  // load the styles
+  var content = __webpack_require__(365);
+  if(typeof content === 'string') content = [[module.i, content, '']];
+  // Prepare cssTransformation
+  var transform;
+  
+  var options = {"hmr":true}
+  options.transform = transform
+  // add the styles to the DOM
+  var update = __webpack_require__(48)(content, options);
+  if(content.locals) module.exports = content.locals;
+  // Hot Module Replacement
+  if(false) {
+    // When the styles change, update the <style> tags
+    if(!content.locals) {
+      module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/lib/loader.js!./refresh-list.scss", function() {
+        var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/lib/loader.js!./refresh-list.scss");
+        if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+        update(newContent);
+      });
+    }
+    // When the module is disposed, remove the <style> tags
+    module.hot.dispose(function() { update(); });
+  }
+  
+  /***/ }),
+  /* 365 */
+  /***/ (function(module, exports, __webpack_require__) {
+  
+  exports = module.exports = __webpack_require__(47)(undefined);
+  // imports
+  
+  
+  // module
+  exports.push([module.i, "button.flat.pagination.refresh:before {\n  font-family: UltimateTeam-Icons,sans-serif;\n  content: '\\E051'; }\n", ""]);
+  
+  // exports
+  
+  
+  /***/ }),
+  /* 366 */
   /***/ (function(module, exports, __webpack_require__) {
   
   "use strict";
@@ -13181,7 +13229,7 @@
   new MinBin(); // eslint-disable-line no-new
   
   /***/ }),
-  /* 365 */
+  /* 367 */
   /***/ (function(module, exports, __webpack_require__) {
   
   "use strict";
@@ -13198,7 +13246,7 @@
   
   var _core = __webpack_require__(18);
   
-  __webpack_require__(366);
+  __webpack_require__(368);
   
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
   
@@ -13273,7 +13321,14 @@
               return;
             }
   
-            var items = controller._listController._viewmodel._collection;
+            var items = [];
+            if (controller._listController._view._list) {
+              items = controller._listController._view._list._listRows;
+            } else {
+              items = controller._listController._viewmodel._collection.map(function (item) {
+                return { data: item };
+              });
+            }
             var rows = $('.listFUTItem');
   
             rows.each(function (index, row) {
@@ -13283,11 +13338,11 @@
   
               var info = '';
               if (settings['show-fitness'].toString() === 'true') {
-                info += '<div class="fitness" style="position: absolute;left: 5px;bottom: -3px;">\n              F:' + items[index].fitness + '\n              </div>';
+                info += '<div class="fitness" style="position: absolute;left: 5px;bottom: -3px;">\n              F:' + items[index].data.fitness + '\n              </div>';
               }
   
               if (settings['show-contracts'].toString() === 'true') {
-                info += '<div class="contracts" style="position: absolute;right: 5px;bottom: -3px;">\n              C:' + items[index].contract + '\n              </div>';
+                info += '<div class="contracts" style="position: absolute;right: 5px;bottom: -3px;">\n              C:' + items[index].data.contract + '\n              </div>';
               }
   
               $(row).find('.small.player').prepend('<div class="infoTab-extra">' + info + '</div>');
@@ -13303,13 +13358,13 @@
   new CardInfo(); // eslint-disable-line no-new
   
   /***/ }),
-  /* 366 */
+  /* 368 */
   /***/ (function(module, exports, __webpack_require__) {
   
   // style-loader: Adds some css to the DOM by adding a <style> tag
   
   // load the styles
-  var content = __webpack_require__(367);
+  var content = __webpack_require__(369);
   if(typeof content === 'string') content = [[module.i, content, '']];
   // Prepare cssTransformation
   var transform;
@@ -13317,7 +13372,7 @@
   var options = {"hmr":true}
   options.transform = transform
   // add the styles to the DOM
-  var update = __webpack_require__(51)(content, options);
+  var update = __webpack_require__(48)(content, options);
   if(content.locals) module.exports = content.locals;
   // Hot Module Replacement
   if(false) {
@@ -13334,10 +13389,10 @@
   }
   
   /***/ }),
-  /* 367 */
+  /* 369 */
   /***/ (function(module, exports, __webpack_require__) {
   
-  exports = module.exports = __webpack_require__(50)(undefined);
+  exports = module.exports = __webpack_require__(47)(undefined);
   // imports
   
   
@@ -13348,7 +13403,7 @@
   
   
   /***/ }),
-  /* 368 */
+  /* 370 */
   /***/ (function(module, exports, __webpack_require__) {
   
   "use strict";
@@ -13451,7 +13506,7 @@
   new ListSize(); // eslint-disable-line no-new
   
   /***/ }),
-  /* 369 */
+  /* 371 */
   /***/ (function(module, exports, __webpack_require__) {
   
   "use strict";
@@ -13468,7 +13523,7 @@
   
   var _core = __webpack_require__(18);
   
-  __webpack_require__(370);
+  __webpack_require__(372);
   
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
   
@@ -13550,9 +13605,9 @@
               return;
             }
   
-            var lists = $('.list-view .itemList');
+            var lists = $('.ut-transfer-list-view .itemList');
             var items = controller._listController._viewmodel._collection;
-            var listRows = $('.list-view .listFUTItem');
+            var listRows = $('.ut-transfer-list-view .listFUTItem');
   
             lists.each(function (index, list) {
               var totals = {
@@ -13566,8 +13621,8 @@
                 return;
               }
   
-              var firstIndex = $(list).find('.listFUTItem:first').index('.list-view .listFUTItem');
-              var lastIndex = $(list).find('.listFUTItem:last').index('.list-view .listFUTItem');
+              var firstIndex = $(list).find('.listFUTItem:first').index('.ut-transfer-list-view .listFUTItem');
+              var lastIndex = $(list).find('.listFUTItem:last').index('.ut-transfer-list-view .listFUTItem');
   
               totals.futbin = items.slice(firstIndex, lastIndex + 1).reduce(function (sum, item, i) {
                 var futbin = parseInt(listRows.eq(i + firstIndex).find('.auctionValue.futbin .coins.value').text().replace(/[,.]/g, ''), 10) || 0;
@@ -13611,13 +13666,13 @@
   new TransferTotals(); // eslint-disable-line no-new
   
   /***/ }),
-  /* 370 */
+  /* 372 */
   /***/ (function(module, exports, __webpack_require__) {
   
   // style-loader: Adds some css to the DOM by adding a <style> tag
   
   // load the styles
-  var content = __webpack_require__(371);
+  var content = __webpack_require__(373);
   if(typeof content === 'string') content = [[module.i, content, '']];
   // Prepare cssTransformation
   var transform;
@@ -13625,7 +13680,7 @@
   var options = {"hmr":true}
   options.transform = transform
   // add the styles to the DOM
-  var update = __webpack_require__(51)(content, options);
+  var update = __webpack_require__(48)(content, options);
   if(content.locals) module.exports = content.locals;
   // Hot Module Replacement
   if(false) {
@@ -13642,10 +13697,10 @@
   }
   
   /***/ }),
-  /* 371 */
+  /* 373 */
   /***/ (function(module, exports, __webpack_require__) {
   
-  exports = module.exports = __webpack_require__(50)(undefined);
+  exports = module.exports = __webpack_require__(47)(undefined);
   // imports
   
   
@@ -13656,7 +13711,7 @@
   
   
   /***/ }),
-  /* 372 */
+  /* 374 */
   /***/ (function(module, exports, __webpack_require__) {
   
   "use strict";
@@ -13667,11 +13722,11 @@
   });
   exports.FutbinSettings = undefined;
   
-  __webpack_require__(373);
+  __webpack_require__(375);
   
-  var _futbinPrices = __webpack_require__(375);
+  var _futbinPrices = __webpack_require__(377);
   
-  var _futbinPlayerLinks = __webpack_require__(376);
+  var _futbinPlayerLinks = __webpack_require__(378);
   
   var _settingsEntry = __webpack_require__(94);
   
@@ -13682,13 +13737,13 @@
   new _futbinPlayerLinks.FutbinPlayerLinks(); // eslint-disable-line no-new
   
   /***/ }),
-  /* 373 */
+  /* 375 */
   /***/ (function(module, exports, __webpack_require__) {
   
   // style-loader: Adds some css to the DOM by adding a <style> tag
   
   // load the styles
-  var content = __webpack_require__(374);
+  var content = __webpack_require__(376);
   if(typeof content === 'string') content = [[module.i, content, '']];
   // Prepare cssTransformation
   var transform;
@@ -13696,7 +13751,7 @@
   var options = {"hmr":true}
   options.transform = transform
   // add the styles to the DOM
-  var update = __webpack_require__(51)(content, options);
+  var update = __webpack_require__(48)(content, options);
   if(content.locals) module.exports = content.locals;
   // Hot Module Replacement
   if(false) {
@@ -13713,10 +13768,10 @@
   }
   
   /***/ }),
-  /* 374 */
+  /* 376 */
   /***/ (function(module, exports, __webpack_require__) {
   
-  exports = module.exports = __webpack_require__(50)(undefined);
+  exports = module.exports = __webpack_require__(47)(undefined);
   // imports
   
   
@@ -13727,7 +13782,7 @@
   
   
   /***/ }),
-  /* 375 */
+  /* 377 */
   /***/ (function(module, exports, __webpack_require__) {
   
   "use strict";
@@ -13839,7 +13894,7 @@
           this._intervalRunning = setInterval(function () {
             var lastFutbinFetchFail = _core.Database.get('lastFutbinFetchFail', 0);
             if (lastFutbinFetchFail + 5 * 60000 > Date.now()) {
-              console.log('Futbin fetching has been paused for 5 minutes because of failed requests earlier (retrying after ' + new Date(lastFutbinFetchFail + 5 * 60000).toLocaleTimeString() + '). Check on Github for known issues.');
+              console.log('Futbin fetching has been paused for 5 minutes because of failed requests earlier (retrying after ' + new Date(lastFutbinFetchFail + 5 * 60000).toLocaleTimeString() + '). Check on Github for known issues.'); // eslint-disable-line no-console
               if (_this3._intervalRunning) {
                 clearInterval(_this3._intervalRunning);
               }
@@ -14088,7 +14143,7 @@
   }(_core.BaseScript);
   
   /***/ }),
-  /* 376 */
+  /* 378 */
   /***/ (function(module, exports, __webpack_require__) {
   
   "use strict";
@@ -14305,7 +14360,7 @@
   new FutbinPlayerLinks(); // eslint-disable-line no-new
   
   /***/ }),
-  /* 377 */
+  /* 379 */
   /***/ (function(module, exports, __webpack_require__) {
   
   "use strict";
@@ -14318,7 +14373,7 @@
   
   var _settingsEntry = __webpack_require__(136);
   
-  var _instantBinConfirm = __webpack_require__(378);
+  var _instantBinConfirm = __webpack_require__(380);
   
   exports.InstantBinConfirmSettings = _settingsEntry.InstantBinConfirmSettings;
   
@@ -14326,7 +14381,7 @@
   new _instantBinConfirm.InstantBinConfirm(); // eslint-disable-line no-new
   
   /***/ }),
-  /* 378 */
+  /* 380 */
   /***/ (function(module, exports, __webpack_require__) {
   
   "use strict";
@@ -14350,10 +14405,10 @@
   function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
   
   function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* global
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 $
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 document
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 window
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  gPopupClickShield
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 enums
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 controllers
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 utils
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  */
   
   var InstantBinConfirm = exports.InstantBinConfirm = function (_BaseScript) {
@@ -14362,46 +14417,54 @@
     function InstantBinConfirm() {
       _classCallCheck(this, InstantBinConfirm);
   
-      return _possibleConstructorReturn(this, (InstantBinConfirm.__proto__ || Object.getPrototypeOf(InstantBinConfirm)).call(this, _settingsEntry.InstantBinConfirmSettings.id));
+      var _this = _possibleConstructorReturn(this, (InstantBinConfirm.__proto__ || Object.getPrototypeOf(InstantBinConfirm)).call(this, _settingsEntry.InstantBinConfirmSettings.id));
+  
+      _this.unmodifiedConfirmation = utils.PopupManager.ShowConfirmation;
+      return _this;
     }
   
     _createClass(InstantBinConfirm, [{
       key: 'activate',
       value: function activate(state) {
-        function mutationHandler(mutationRecords) {
-          mutationRecords.forEach(function (mutation) {
-            if ($(mutation.addedNodes).hasClass('Dialog')) {
-              var t = gPopupClickShield._activePopup._title;
-              if (t === 'popup.buyNowConfirmationTitle') {
-                setTimeout(function () {
-                  gPopupClickShield._activePopup._eOptionSelected(2);
-                }, 13);
-              }
-            }
-          });
-        }
-  
         _get(InstantBinConfirm.prototype.__proto__ || Object.getPrototypeOf(InstantBinConfirm.prototype), 'activate', this).call(this, state);
-        var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
-        var obsConfig = {
-          childList: true,
-          characterData: true,
-          attributes: false,
-          subtree: true
-        };
-        this.observer = new MutationObserver(mutationHandler);
-        this.observer.observe(document, obsConfig);
       }
     }, {
       key: 'onScreenRequest',
       value: function onScreenRequest(screenId) {
+        var _this2 = this;
+  
         _get(InstantBinConfirm.prototype.__proto__ || Object.getPrototypeOf(InstantBinConfirm.prototype), 'onScreenRequest', this).call(this, screenId);
+        var settings = this.getSettings();
+  
+        utils.PopupManager.ShowConfirmation = function (dialog, amount, proceed, s) {
+          var cancel = s;
+          if (!utils.JS.isFunction(s)) {
+            cancel = function cancel() {};
+          }
+  
+          if (settings.isActive && dialog.title === utils.PopupManager.Confirmations.CONFIRM_BUY_NOW.title) {
+            proceed();
+            return;
+          }
+          var n = new controllers.views.popups.Dialog(dialog.message, dialog.title, enums.UIDialogTypes.MESSAGE, amount, dialog.buttonLabels);
+          n.init();
+          gPopupClickShield.setActivePopup(n);
+          n.onExit.observe(_this2, function (e, t) {
+            if (t !== enums.UIDialogOptions.CANCEL && t !== enums.UIDialogOptions.NO) {
+              if (proceed) {
+                proceed();
+              } else if (cancel) {
+                cancel();
+              }
+            }
+          });
+        };
       }
     }, {
       key: 'deactivate',
       value: function deactivate(state) {
         _get(InstantBinConfirm.prototype.__proto__ || Object.getPrototypeOf(InstantBinConfirm.prototype), 'deactivate', this).call(this, state);
-        this.observer.disconnect();
+        utils.PopupManager.ShowConfirmation = this.unmodifiedConfirmation;
       }
     }]);
   
