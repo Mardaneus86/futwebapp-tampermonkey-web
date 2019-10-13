@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        FUT Enhancer
-// @version     1.6.1
+// @version     1.6.2
 // @description Enhances the FIFA Ultimate Team 20 Web app. Includes Futbin integration and other useful tools
 // @license     MIT
 // @author      Tim Klingeleers
@@ -10203,7 +10203,7 @@
   
   
   // module
-  exports.push([module.i, ".ut-content-container {\n  padding: 0; }\n  .ut-content-container .ut-content {\n    border: 0; }\n    .ut-content-container .ut-content.ut-content--split-view-extend {\n      max-height: 100%; }\n\n.listFUTItem .entityContainer .name.untradeable {\n  display: block; }\n  .listFUTItem .entityContainer .name.untradeable::before {\n    position: relative;\n    padding-right: 10px; }\n\n.ut-club-search-results-view .listFUTItem .entityContainer {\n  width: 45%; }\n\n@media (min-width: 1281px) {\n  .ut-content-container .ut-content {\n    max-width: 100%;\n    max-height: 100%; }\n  .ut-split-view .ut-content {\n    max-width: 100%;\n    max-height: 100%; } }\n", ""]);
+  exports.push([module.i, ".ut-content-container {\n  padding: 0; }\n  .ut-content-container .ut-content {\n    border: 0; }\n    .ut-content-container .ut-content.ut-content--split-view-extend {\n      max-height: 100%; }\n\n.listFUTItem .entityContainer .name.untradeable {\n  display: block; }\n  .listFUTItem .entityContainer .name.untradeable::before {\n    position: relative;\n    padding-right: 10px; }\n\n.ut-club-search-results-view.ui-layout-left .listFUTItem .entityContainer,\n.ut-unassigned-view.ui-layout-left .listFUTItem .entityContainer {\n  width: 45%; }\n\n@media (min-width: 1281px) {\n  .ut-content-container .ut-content {\n    max-width: 100%;\n    max-height: 100%; }\n  .ut-split-view .ut-content {\n    max-width: 100%;\n    max-height: 100%; } }\n", ""]);
   
   // exports
   
@@ -13195,8 +13195,8 @@
   
           var bidSpinner = quicklistpanelView._bidNumericStepper;
           var buySpinner = quicklistpanelView._buyNowNumericStepper;
-          bidSpinner.value = listPrice.start;
-          buySpinner.value = listPrice.buyNow;
+          bidSpinner.setValue(listPrice.start);
+          buySpinner.setValue(listPrice.buyNow);
         }
       }
   
@@ -13776,7 +13776,7 @@
   
   
   // module
-  exports.push([module.i, "#TradePile .player-stats-data-component, #Unassigned .player-stats-data-component {\n  width: 12em; }\n\n#TradePile .listFUTItem .entityContainer, #Unassigned .listFUTItem .entityContainer {\n  width: 45%; }\n\n#Unassigned .listFUTItem .auction .auctionValue, #Unassigned .listFUTItem .auction .auction-state {\n  display: none; }\n\n#Unassigned .listFUTItem .auction .auctionValue.futbin {\n  display: block;\n  float: right; }\n\n.MyClubResults .listFUTItem .auction {\n  display: block;\n  position: absolute;\n  right: 0; }\n\n.MyClubResults .listFUTItem .auction .auctionValue, .MyClubResults .listFUTItem .auction .auction-state {\n  width: 24%;\n  float: right;\n  padding-right: 1%;\n  display: none; }\n\n.MyClubResults .listFUTItem .auction .auctionValue.futbin {\n  display: block; }\n\n.listFUTItem .auction .auction-state {\n  width: 25%;\n  float: right; }\n\n.listFUTItem .auction .auctionValue {\n  width: 24%;\n  float: left;\n  padding-right: 1%; }\n\n.futbinupdate {\n  font-size: 14px;\n  clear: both;\n  display: block; }\n\n.coins.value.futbin {\n  -webkit-filter: hue-rotate(165deg);\n  filter: hue-rotate(165deg); }\n\n.listFUTItem.has-auction-data.futbin-bargain .rowContent {\n  background-color: #7ffe9445; }\n\n.listFUTItem.has-auction-data.selected.futbin-bargain .rowContent, .listFUTItem.has-auction-data.selected.futbin-bargain .rowContent.active {\n  background-color: #7ffe94;\n  color: #434853; }\n\n.player-picks-modal .time {\n  display: block; }\n\n.squadSlotPedestal.futbin {\n  min-width: 58px;\n  flex: none;\n  width: auto;\n  bottom: -2.2em;\n  white-space: nowrap; }\n  .squadSlotPedestal.futbin .coins.value {\n    text-align: center;\n    margin: 0 8px; }\n", ""]);
+  exports.push([module.i, "#TradePile .player-stats-data-component, #Unassigned .player-stats-data-component {\n  width: 12em; }\n\n#TradePile .listFUTItem .entityContainer, #Unassigned .listFUTItem .entityContainer {\n  width: 45%; }\n\n#Unassigned .listFUTItem .auction .auctionValue, #Unassigned .listFUTItem .auction .auction-state {\n  display: none; }\n\n#Unassigned .listFUTItem .auction .auctionValue.futbin {\n  display: block;\n  float: right; }\n\n.MyClubResults .listFUTItem .auction {\n  display: block;\n  position: absolute;\n  right: 0; }\n\n.MyClubResults .listFUTItem .auction .auctionValue, .MyClubResults .listFUTItem .auction .auction-state {\n  width: 24%;\n  float: right;\n  padding-right: 1%;\n  display: none; }\n\n.MyClubResults .listFUTItem .auction .auctionValue.futbin {\n  display: block; }\n\n.listFUTItem .auction .auction-state {\n  width: 25%;\n  float: right; }\n\n.listFUTItem .auction .auctionValue {\n  width: 24%;\n  float: left;\n  padding-right: 1%; }\n\n.futbinupdate {\n  font-size: 14px;\n  clear: both;\n  display: block; }\n\n.coins.value.futbin {\n  -webkit-filter: hue-rotate(165deg);\n  filter: hue-rotate(165deg); }\n\n.listFUTItem.has-auction-data.futbin-bargain .rowContent {\n  background-color: #7ffe9445; }\n\n.listFUTItem.has-auction-data.selected.futbin-bargain .rowContent, .listFUTItem.has-auction-data.selected.futbin-bargain .rowContent.active {\n  background-color: #7ffe94;\n  color: #434853; }\n\n.player-picks-modal .time {\n  display: block; }\n\n.ut-squad-slot-pedestal-view.futbin {\n  min-width: 58px;\n  flex: none;\n  width: auto;\n  bottom: -2.2em;\n  white-space: nowrap; }\n  .ut-squad-slot-pedestal-view.futbin .coins.value {\n    text-align: center;\n    margin: 0 8px; }\n", ""]);
   
   // exports
   
@@ -13842,7 +13842,7 @@
   
         var controllerName = getAppMain().getRootViewController().getPresentedViewController().getCurrentViewController().getCurrentController().className;
   
-        if (screenId === 'SBCSquadSplitViewController' || screenId === 'SquadSplitViewController') {
+        if (screenId === 'SBCSquadSplitViewController' || screenId === 'SquadSplitViewController' || screenId === 'UTSquadSplitViewController' || screenId === 'UTSquadsHubViewController' || screenId === 'UTSBCSquadSplitViewController') {
           if (this.getSettings()['show-sbc-squad'].toString() !== 'true') {
             return;
           }
@@ -13851,8 +13851,10 @@
             $('.squadSlotPedestal.futbin').remove(); // forces update
             _this2._show('SBCSquadSplitViewController', true);
           });
-          $('.ut-squad-summary-info--right.ut-squad-summary-info').append('\n        <div class="futbin total">\n          <span class="ut-squad-summary-label">Total BIN value</span>\n          <div style="text-align: right">\n            <span class="ut-squad-summary-value coins value">---</span>\n          </div>\n        </div>\n      ');
-        } else if (this._squadObserver !== null && controllerName !== 'SBCSquadSplitViewController' && controllerName !== 'SquadSplitViewController') {
+          if ($('.ut-squad-summary-info--right.ut-squad-summary-info').find('.futbin').length === 0) {
+            $('.ut-squad-summary-info--right.ut-squad-summary-info').append('\n        <div class="futbin total">\n          <span class="ut-squad-summary-label">Total BIN value</span>\n          <div style="text-align: right">\n            <span class="ut-squad-summary-value coins value">---</span>\n          </div>\n        </div>\n      ');
+          }
+        } else if (this._squadObserver !== null && controllerName !== 'SBCSquadSplitViewController' && controllerName !== 'SquadSplitViewController' && controllerName !== 'UTSquadSplitViewController' && controllerName !== 'UTSquadsHubViewController' && controllerName !== 'UTSBCSquadSplitViewController') {
           this._squadObserver.unobserve(this);
         }
   
@@ -13885,7 +13887,7 @@
         'UTUnassignedItemsSplitViewController', // pack buy
         'ClubSearchResultsSplitViewController', // club
         'UTMarketSearchResultsSplitViewController', // market search
-        'UTPlayerPicksViewController', 'SBCSquadSplitViewController', 'SquadSplitViewController'];
+        'UTPlayerPicksViewController', 'SBCSquadSplitViewController', 'SquadSplitViewController', 'UTSquadSplitViewController', 'UTSquadsHubViewController', 'UTSBCSquadSplitViewController'];
   
         if (showFutbinPricePages.indexOf(screen) !== -1) {
           if (this._intervalRunning) {
@@ -13909,7 +13911,7 @@
             var controller = getAppMain().getRootViewController().getPresentedViewController().getCurrentViewController().getCurrentController();
   
             var uiItems = null;
-            if (screen === 'SBCSquadSplitViewController' || screen === 'SquadSplitViewController') {
+            if (screen === 'SBCSquadSplitViewController' || screen === 'SquadSplitViewController' || screen === 'UTSquadSplitViewController' || screen === 'UTSquadsHubViewController' || screen === 'UTSBCSquadSplitViewController') {
               uiItems = $(controller._view.__root).find('.squadSlot');
   
               if (_this3.getSettings()['show-sbc-squad'].toString() !== 'true') {
@@ -13929,7 +13931,7 @@
             }
   
             var listController = null;
-            if (screen === 'SBCSquadSplitViewController' || screen === 'SquadSplitViewController') {
+            if (screen === 'SBCSquadSplitViewController' || screen === 'SquadSplitViewController' || screen === 'UTSquadSplitViewController' || screen === 'UTSquadsHubViewController' || screen === 'UTSBCSquadSplitViewController') {
               // not needed
             } else if (screen === 'UTPlayerPicksViewController') {
               if (!controller.getPresentedViewController()) {
@@ -13953,10 +13955,11 @@
             }
   
             var listrows = null;
-            if (screen === 'SBCSquadSplitViewController' || screen === 'SquadSplitViewController') {
-              listrows = controller._squad._players.slice(0, 11).map(function (p) {
+            if (screen === 'SBCSquadSplitViewController' || screen === 'SquadSplitViewController' || screen === 'UTSquadSplitViewController' || screen === 'UTSquadsHubViewController' || screen === 'UTSBCSquadSplitViewController') {
+              listrows = controller._squad._players.slice(0, 11).map(function (p, index) {
                 return {
-                  data: p._item
+                  data: p._item,
+                  target: controller._view._lView._slotViews[index].__root
                 };
               });
             } else if (listController._picks && screen === 'UTPlayerPicksViewController') {
@@ -14023,7 +14026,7 @@
                     futbinlist.push(futbinData[item.playerId]);
                   });
                   var platform = _fut.utils.getPlatform();
-                  if (screen === 'SBCSquadSplitViewController' || screen === 'SquadSplitViewController') {
+                  if (screen === 'SBCSquadSplitViewController' || screen === 'SquadSplitViewController' || screen === 'UTSquadSplitViewController' || screen === 'UTSquadsHubViewController' || screen === 'UTSBCSquadSplitViewController') {
                     var futbinTotal = futbinlist.reduce(function (sum, item) {
                       return sum + parseInt(item.prices[platform].LCPrice.toString().replace(/[,.]/g, ''), 10) || 0;
                     }, 0);
@@ -14092,11 +14095,11 @@
                 case 12:
                   futbinText = 'Futbin BIN';
                   _context.t0 = screen;
-                  _context.next = _context.t0 === 'SBCSquadSplitViewController' ? 16 : _context.t0 === 'SquadSplitViewController' ? 16 : _context.t0 === 'UTPlayerPicksViewController' ? 18 : _context.t0 === 'UTTransferListSplitViewController' ? 20 : _context.t0 === 'UTWatchListSplitViewController' ? 20 : _context.t0 === 'UTUnassignedItemsSplitViewController' ? 20 : _context.t0 === 'ClubSearchResultsSplitViewController' ? 20 : _context.t0 === 'UTMarketSearchResultsSplitViewController' ? 20 : _context.t0 === 'SearchResults' ? 25 : 28;
+                  _context.next = _context.t0 === 'SBCSquadSplitViewController' ? 16 : _context.t0 === 'SquadSplitViewController' ? 16 : _context.t0 === 'UTSquadSplitViewController' ? 16 : _context.t0 === 'UTSquadsHubViewController' ? 16 : _context.t0 === 'UTSBCSquadSplitViewController' ? 16 : _context.t0 === 'UTPlayerPicksViewController' ? 18 : _context.t0 === 'UTTransferListSplitViewController' ? 20 : _context.t0 === 'UTWatchListSplitViewController' ? 20 : _context.t0 === 'UTUnassignedItemsSplitViewController' ? 20 : _context.t0 === 'ClubSearchResultsSplitViewController' ? 20 : _context.t0 === 'UTMarketSearchResultsSplitViewController' ? 20 : _context.t0 === 'SearchResults' ? 25 : 28;
                   break;
   
                 case 16:
-                  target.prepend('\n        <div class="squadSlotPedestal no-state futbin">\n          <span class="coins value" title="Last update: ' + (futbinData[playerId].prices[platform].updated || 'never') + '">' + (futbinData[playerId].prices[platform].LCPrice || '---') + '</span>\n        </div>');
+                  target.prepend('\n        <div class="ut-squad-slot-pedestal-view no-state futbin">\n          <span class="coins value" title="Last update: ' + (futbinData[playerId].prices[platform].updated || 'never') + '">' + (futbinData[playerId].prices[platform].LCPrice || '---') + '</span>\n        </div>');
                   return _context.abrupt('break', 28);
   
                 case 18:
