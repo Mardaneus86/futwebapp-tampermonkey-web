@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        FUT Enhancer
-// @version     1.6.2
+// @version     1.6.4
 // @description Enhances the FIFA Ultimate Team 20 Web app. Includes Futbin integration and other useful tools
 // @license     MIT
 // @author      Tim Klingeleers
@@ -10203,7 +10203,7 @@
   
   
   // module
-  exports.push([module.i, ".ut-content-container {\n  padding: 0; }\n  .ut-content-container .ut-content {\n    border: 0; }\n    .ut-content-container .ut-content.ut-content--split-view-extend {\n      max-height: 100%; }\n\n.listFUTItem .entityContainer .name.untradeable {\n  display: block; }\n  .listFUTItem .entityContainer .name.untradeable::before {\n    position: relative;\n    padding-right: 10px; }\n\n.ut-club-search-results-view.ui-layout-left .listFUTItem .entityContainer,\n.ut-unassigned-view.ui-layout-left .listFUTItem .entityContainer {\n  width: 45%; }\n\n@media (min-width: 1281px) {\n  .ut-content-container .ut-content {\n    max-width: 100%;\n    max-height: 100%; }\n  .ut-split-view .ut-content {\n    max-width: 100%;\n    max-height: 100%; } }\n", ""]);
+  exports.push([module.i, ".ut-content-container {\n  padding: 0; }\n  .ut-content-container .ut-content {\n    border: 0; }\n    .ut-content-container .ut-content.ut-content--split-view-extend {\n      max-height: 100%; }\n\n.listFUTItem .entityContainer .name.untradeable {\n  display: block; }\n  .listFUTItem .entityContainer .name.untradeable::before {\n    position: relative;\n    padding-right: 10px; }\n\n.ut-transfer-list-view .listFUTItem .entityContainer,\n.ut-club-search-results-view.ui-layout-left .listFUTItem .entityContainer,\n.ut-unassigned-view.ui-layout-left .listFUTItem .entityContainer {\n  width: 45%; }\n\n@media (min-width: 1281px) {\n  .ut-content-container .ut-content {\n    max-width: 100%;\n    max-height: 100%; }\n  .ut-split-view .ut-content {\n    max-width: 100%;\n    max-height: 100%; } }\n", ""]);
   
   // exports
   
@@ -12086,7 +12086,7 @@
   exports.TransferMarket = undefined;
   
   var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /* globals
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       enums transferobjects factories communication gUserModel models repositories services
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       enums factories communication gUserModel models repositories services
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        */
   
   
@@ -12191,36 +12191,38 @@
             while (1) {
               switch (_context3.prev = _context3.next) {
                 case 0:
+                  services.Item.clearTransferMarketCache();
+  
                   this._logger.log('Searching min buy for ' + item.type + ' ' + item._staticData.name + ' from low upward first ' + lowUp, 'Core - Transfermarket');
                   minBuy = 0;
   
                   if (!lowUp) {
-                    _context3.next = 7;
+                    _context3.next = 8;
                     break;
                   }
   
-                  _context3.next = 5;
+                  _context3.next = 6;
                   return this._findLowUp(item, itemsForMean);
   
-                case 5:
+                case 6:
                   minBuy = _context3.sent;
   
                   this._logger.log('Low up search yielded ' + minBuy + ' as a result', 'Core - Transfermarket');
   
-                case 7:
+                case 8:
                   if (!(minBuy === 0)) {
-                    _context3.next = 12;
+                    _context3.next = 13;
                     break;
                   }
   
                   this._logger.log('Searching low down...', 'Core - Transfermarket');
-                  _context3.next = 11;
+                  _context3.next = 12;
                   return this._findLowDown(item, itemsForMean);
   
-                case 11:
+                case 12:
                   minBuy = _context3.sent;
   
-                case 12:
+                case 13:
   
                   if (minBuy === 0) {
                     this._logger.log('No players found... it might be extinct', 'Core - Transfermarket');
@@ -12229,7 +12231,7 @@
                   }
                   return _context3.abrupt('return', minBuy);
   
-                case 14:
+                case 15:
                 case 'end':
                   return _context3.stop();
               }
@@ -12583,7 +12585,8 @@
         var maxBuy = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : -1;
   
         // TODO: check if this can handle other items as well
-        var searchCriteria = new transferobjects.SearchCriteria();
+        // eslint-disable-next-line no-undef
+        var searchCriteria = new UTSearchCriteriaDTO();
   
         searchCriteria.count = 30;
         searchCriteria.maskedDefId = item.getMaskedResourceId();
