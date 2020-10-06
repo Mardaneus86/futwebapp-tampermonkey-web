@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        FUT Enhancer
-// @version     2.0.0
+// @version     2.0.1
 // @description Enhances the FIFA Ultimate Team 21 Web app. Includes Futbin integration and other useful tools
 // @license     MIT
 // @author      Tim Klingeleers
@@ -12925,7 +12925,11 @@ var RefreshTransferList = function (_BaseScript) {
             if ($('.pagingContainer').find('.refresh').length === 0) {
               $('.pagingContainer').append('<button class="flat pagination refresh" style="float: right;">Refresh list</button>');
               $('.refresh').click(function () {
-                getAppMain().getRootViewController().getPresentedViewController().getCurrentViewController().getCurrentController()._listController._requestItems();
+                var listController = getAppMain().getRootViewController().getPresentedViewController().getCurrentViewController().getCurrentController()._listController;
+
+                var currentPage = listController._paginationViewModel._pageIndex;
+
+                listController._requestItems(currentPage);
               });
             }
           }, 1000);
@@ -13263,7 +13267,6 @@ var CardInfoSettings = exports.CardInfoSettings = function (_SettingsEntry) {
     var _this = _possibleConstructorReturn(this, (CardInfoSettings.__proto__ || Object.getPrototypeOf(CardInfoSettings)).call(this, 'card-info', 'Extra card information', null));
 
     _this.addSetting('Show contracts', 'show-contracts', true, 'checkbox');
-    _this.addSetting('Show fitness', 'show-fitness', true, 'checkbox');
     return _this;
   }
 
@@ -13336,9 +13339,6 @@ var CardInfo = function (_BaseScript) {
             }
 
             var info = '';
-            if (settings['show-fitness'].toString() === 'true') {
-              info += '<div class="fitness" style="position: absolute;left: 5px;bottom: -3px;">\n              F:' + items[index].data.fitness + '\n              </div>';
-            }
 
             if (settings['show-contracts'].toString() === 'true') {
               info += '<div class="contracts" style="position: absolute;right: 5px;bottom: -3px;">\n              C:' + items[index].data.contract + '\n              </div>';
@@ -13642,7 +13642,7 @@ var TransferTotals = function (_BaseScript) {
             var totalsItem = listEl.prev('.transfer-totals');
 
             if (!totalsItem.length) {
-              $('<div class="transfer-totals">\n            <div class="auction">\n              <div class="auctionValue futbin">\n                <span class="label">Futbin BIN</span>\n                <span class="coins value total-futbin">0</span>\n              </div>\n              <div class="auctionStartPrice auctionValue">&nbsp;</div>\n              <div class="auctionValue">\n                <span class="label">Bid Total</span>\n                <span class="coins value total-bid">0</span>\n              </div>\n              <div class="auctionValue">\n                <span class="label">BIN Total</span>\n                <span class="coins value total-bin">0</span>\n              </div>\n            </div>\n          </div>').insertBefore(listEl);
+              $('<div class="transfer-totals">\n            <div class="auction">\n              <div class="auctionValue futbin">\n                <span class="label">Futbin BIN</span>\n                <span class="coins value total-futbin">0</span>\n              </div>\n              <div class="auctionValue">\n                <span class="label">Bid Total</span>\n                <span class="coins value total-bid">0</span>\n              </div>\n              <div class="auctionValue">\n                <span class="label">BIN Total</span>\n                <span class="coins value total-bin">0</span>\n              </div>\n            </div>\n          </div>').insertBefore(listEl);
             }
 
             if (totals.futbin > 0) {
@@ -13775,7 +13775,7 @@ exports = module.exports = __webpack_require__(47)(undefined);
 
 
 // module
-exports.push([module.i, "#TradePile .player-stats-data-component, #Unassigned .player-stats-data-component {\n  width: 12em; }\n\n#TradePile .listFUTItem .entityContainer, #Unassigned .listFUTItem .entityContainer {\n  width: 45%; }\n\n#Unassigned .listFUTItem .auction .auctionValue, #Unassigned .listFUTItem .auction .auction-state {\n  display: none; }\n\n#Unassigned .listFUTItem .auction .auctionValue.futbin {\n  display: block;\n  float: right; }\n\n.MyClubResults .listFUTItem .auction {\n  display: block;\n  position: absolute;\n  right: 0; }\n\n.MyClubResults .listFUTItem .auction .auctionValue, .MyClubResults .listFUTItem .auction .auction-state {\n  width: 24%;\n  float: right;\n  padding-right: 1%;\n  display: none; }\n\n.MyClubResults .listFUTItem .auction .auctionValue.futbin {\n  display: block; }\n\n.listFUTItem .auction .auction-state {\n  width: 25%;\n  float: right; }\n\n.listFUTItem .auction {\n  display: block; }\n\n.listFUTItem .auction .auctionValue {\n  width: 24%;\n  float: left;\n  padding-right: 1%; }\n\n.futbinupdate {\n  font-size: 14px;\n  clear: both;\n  display: block; }\n\n.coins.value.futbin {\n  -webkit-filter: hue-rotate(165deg);\n  filter: hue-rotate(165deg); }\n\n.listFUTItem.has-auction-data.futbin-bargain .rowContent {\n  background-color: #7ffe9445; }\n\n.listFUTItem.has-auction-data.selected.futbin-bargain .rowContent, .listFUTItem.has-auction-data.selected.futbin-bargain .rowContent.active {\n  background-color: #7ffe94;\n  color: #434853; }\n\n.player-picks-modal .time {\n  display: block; }\n\n.ut-squad-slot-pedestal-view.futbin {\n  min-width: 58px;\n  flex: none;\n  width: auto;\n  bottom: -2.2em;\n  white-space: nowrap; }\n  .ut-squad-slot-pedestal-view.futbin .coins.value {\n    text-align: center;\n    margin: 0 8px; }\n", ""]);
+exports.push([module.i, "#TradePile .player-stats-data-component, #Unassigned .player-stats-data-component {\n  width: 12em; }\n\n#TradePile .listFUTItem .entityContainer, #Unassigned .listFUTItem .entityContainer {\n  width: 45%; }\n\n#Unassigned .listFUTItem .auction .auctionValue, #Unassigned .listFUTItem .auction .auction-state {\n  display: none; }\n\n#Unassigned .listFUTItem .auction .auctionValue.futbin {\n  display: block;\n  float: right; }\n\n.MyClubResults .listFUTItem .auction {\n  display: block;\n  position: absolute;\n  right: 0; }\n\n.MyClubResults .listFUTItem .auction .auctionValue, .MyClubResults .listFUTItem .auction .auction-state {\n  width: 24%;\n  float: right;\n  padding-right: 1%;\n  display: none; }\n\n.MyClubResults .listFUTItem .auction .auctionValue.futbin {\n  display: block; }\n\n.listFUTItem .auction {\n  top: 5%; }\n  .listFUTItem .auction .futbin .coins.value .time {\n    display: inline;\n    font-size: 1em; }\n\n.ut-navigation-container-view.ui-layout-right .listFUTItem .auction {\n  top: 30%; }\n\n.futbinupdate {\n  font-size: 14px;\n  clear: both;\n  display: block; }\n\n.coins.value.futbin {\n  -webkit-filter: hue-rotate(165deg);\n  filter: hue-rotate(165deg); }\n\n.listFUTItem.has-auction-data.futbin-bargain .rowContent {\n  background-color: #7ffe9445; }\n\n.listFUTItem.has-auction-data.selected.futbin-bargain .rowContent, .listFUTItem.has-auction-data.selected.futbin-bargain .rowContent.active {\n  background-color: #7ffe94;\n  color: #434853; }\n\n.ut-club-search-results-view .listFUTItem .auction .auction-state, .ut-club-search-results-view .listFUTItem .auction .auctionValue {\n  display: none; }\n  .ut-club-search-results-view .listFUTItem .auction .auction-state.futbin, .ut-club-search-results-view .listFUTItem .auction .auctionValue.futbin {\n    display: block; }\n\n.player-picks-modal .time {\n  display: block; }\n\n.ut-squad-slot-pedestal-view.futbin {\n  min-width: 58px;\n  flex: none;\n  width: auto;\n  bottom: -2.6em;\n  white-space: nowrap; }\n  .ut-squad-slot-pedestal-view.futbin .coins.value {\n    text-align: center;\n    margin: 0 8px; }\n", ""]);
 
 // exports
 
@@ -14098,23 +14098,23 @@ var FutbinPrices = exports.FutbinPrices = function (_BaseScript) {
                 break;
 
               case 16:
-                target.prepend('\n        <div class="ut-squad-slot-pedestal-view no-state futbin">\n          <span class="coins value" title="Last update: ' + (futbinData[playerId].prices[platform].updated || 'never') + '">' + (futbinData[playerId].prices[platform].LCPrice || '---') + '</span>\n        </div>');
+                target.append('\n        <div class="ut-squad-slot-pedestal-view no-state futbin">\n          <span class="coins value" title="Last update: ' + (futbinData[playerId].prices[platform].updated || 'never') + '">' + (futbinData[playerId].prices[platform].LCPrice || '---') + '</span>\n        </div>');
                 return _context.abrupt('break', 28);
 
               case 18:
-                target.append('\n        <div class="auctionValue futbin">\n          <span class="label">' + futbinText + '</span>\n          <span class="coins value">' + (futbinData[playerId].prices[platform].LCPrice || '---') + '</span>\n          <span class="time" style="color: #acacc4;">' + (futbinData[playerId].prices[platform].updated || 'never') + '</span>\n        </div>');
+                target.append('\n        <div class="auctionValue futbin">\n          <span class="label">' + futbinText + '</span>\n          <span class="coins value">' + (futbinData[playerId].prices[platform].LCPrice || '---') + '\n            <span class="time" style="color: #acacc4;"> (' + (futbinData[playerId].prices[platform].updated || 'never') + ')</span>\n          </span>\n        </div>');
                 return _context.abrupt('break', 28);
 
               case 20:
                 $('.secondary.player-stats-data-component').css('float', 'left');
                 targetForButton = target.find('.auction');
                 targetForButton.show();
-                targetForButton.prepend('\n        <div class="auctionValue futbin">\n          <span class="label">' + futbinText + '</span>\n          <span class="coins value">' + (futbinData[playerId].prices[platform].LCPrice || '---') + '</span>\n          <span class="time" style="color: #acacc4;">' + (futbinData[playerId].prices[platform].updated || 'never') + '</span>\n        </div>');
+                targetForButton.append('\n        <div class="auctionValue futbin">\n          <span class="label">' + futbinText + '</span>\n          <span class="coins value">' + (futbinData[playerId].prices[platform].LCPrice || '---') + '\n            <span class="time" style="color: #acacc4;"> (' + (futbinData[playerId].prices[platform].updated || 'never') + ')</span>\n          </span>\n        </div>');
                 return _context.abrupt('break', 28);
 
               case 25:
                 targetForButton = target.find('.auctionValue').parent();
-                targetForButton.prepend('\n        <div class="auctionValue futbin">\n          <span class="label">' + futbinText + '</span>\n          <span class="coins value">' + (futbinData[playerId].prices[platform].LCPrice || '---') + '</span>\n          <span class="time" style="color: #acacc4;">' + (futbinData[playerId].prices[platform].updated || 'never') + '</span>\n        </div>');
+                targetForButton.append('\n        <div class="auctionValue futbin">\n          <span class="label">' + futbinText + '</span>\n          <span class="coins value">' + (futbinData[playerId].prices[platform].LCPrice || '---') + '\n            <span class="time" style="color: #acacc4;"> (' + (futbinData[playerId].prices[platform].updated || 'never') + ')</span>\n          </span>\n        </div>');
                 return _context.abrupt('break', 28);
 
               case 28:
