@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        FUT Enhancer
-// @version     2.0.1
+// @version     2.0.2
 // @description Enhances the FIFA Ultimate Team 21 Web app. Includes Futbin integration and other useful tools
 // @license     MIT
 // @author      Tim Klingeleers
@@ -13339,7 +13339,6 @@ var CardInfo = function (_BaseScript) {
             }
 
             var info = '';
-
             if (settings['show-contracts'].toString() === 'true') {
               info += '<div class="contracts" style="position: absolute;right: 5px;bottom: -3px;">\n              C:' + items[index].data.contract + '\n              </div>';
             }
@@ -13775,7 +13774,7 @@ exports = module.exports = __webpack_require__(47)(undefined);
 
 
 // module
-exports.push([module.i, "#TradePile .player-stats-data-component, #Unassigned .player-stats-data-component {\n  width: 12em; }\n\n#TradePile .listFUTItem .entityContainer, #Unassigned .listFUTItem .entityContainer {\n  width: 45%; }\n\n#Unassigned .listFUTItem .auction .auctionValue, #Unassigned .listFUTItem .auction .auction-state {\n  display: none; }\n\n#Unassigned .listFUTItem .auction .auctionValue.futbin {\n  display: block;\n  float: right; }\n\n.MyClubResults .listFUTItem .auction {\n  display: block;\n  position: absolute;\n  right: 0; }\n\n.MyClubResults .listFUTItem .auction .auctionValue, .MyClubResults .listFUTItem .auction .auction-state {\n  width: 24%;\n  float: right;\n  padding-right: 1%;\n  display: none; }\n\n.MyClubResults .listFUTItem .auction .auctionValue.futbin {\n  display: block; }\n\n.listFUTItem .auction {\n  top: 5%; }\n  .listFUTItem .auction .futbin .coins.value .time {\n    display: inline;\n    font-size: 1em; }\n\n.ut-navigation-container-view.ui-layout-right .listFUTItem .auction {\n  top: 30%; }\n\n.futbinupdate {\n  font-size: 14px;\n  clear: both;\n  display: block; }\n\n.coins.value.futbin {\n  -webkit-filter: hue-rotate(165deg);\n  filter: hue-rotate(165deg); }\n\n.listFUTItem.has-auction-data.futbin-bargain .rowContent {\n  background-color: #7ffe9445; }\n\n.listFUTItem.has-auction-data.selected.futbin-bargain .rowContent, .listFUTItem.has-auction-data.selected.futbin-bargain .rowContent.active {\n  background-color: #7ffe94;\n  color: #434853; }\n\n.ut-club-search-results-view .listFUTItem .auction .auction-state, .ut-club-search-results-view .listFUTItem .auction .auctionValue {\n  display: none; }\n  .ut-club-search-results-view .listFUTItem .auction .auction-state.futbin, .ut-club-search-results-view .listFUTItem .auction .auctionValue.futbin {\n    display: block; }\n\n.player-picks-modal .time {\n  display: block; }\n\n.ut-squad-slot-pedestal-view.futbin {\n  min-width: 58px;\n  flex: none;\n  width: auto;\n  bottom: -2.6em;\n  white-space: nowrap; }\n  .ut-squad-slot-pedestal-view.futbin .coins.value {\n    text-align: center;\n    margin: 0 8px; }\n", ""]);
+exports.push([module.i, "#TradePile .player-stats-data-component, #Unassigned .player-stats-data-component {\n  width: 12em; }\n\n#TradePile .listFUTItem .entityContainer, #Unassigned .listFUTItem .entityContainer {\n  width: 45%; }\n\n#Unassigned .listFUTItem .auction .auctionValue, #Unassigned .listFUTItem .auction .auction-state {\n  display: none; }\n\n#Unassigned .listFUTItem .auction .auctionValue.futbin {\n  display: block;\n  float: right; }\n\n.MyClubResults .listFUTItem .auction {\n  display: block;\n  position: absolute;\n  right: 0; }\n\n.MyClubResults .listFUTItem .auction .auctionValue, .MyClubResults .listFUTItem .auction .auction-state {\n  width: 24%;\n  float: right;\n  padding-right: 1%;\n  display: none; }\n\n.MyClubResults .listFUTItem .auction .auctionValue.futbin {\n  display: block; }\n\n.listFUTItem .auction {\n  top: 5%; }\n  .listFUTItem .auction .futbin .coins.value .time {\n    display: inline;\n    font-size: 1em; }\n\n.ut-navigation-container-view.ui-layout-right .listFUTItem .auction {\n  top: 30%; }\n\n.futbinupdate {\n  font-size: 14px;\n  clear: both;\n  display: block; }\n\n.coins.value.futbin {\n  -webkit-filter: hue-rotate(165deg);\n  filter: hue-rotate(165deg); }\n\n.listFUTItem.has-auction-data.futbin-bargain .rowContent {\n  background-color: #7ffe9445; }\n\n.listFUTItem.has-auction-data.selected.futbin-bargain .rowContent, .listFUTItem.has-auction-data.selected.futbin-bargain .rowContent.active {\n  background-color: #7ffe94;\n  color: #434853; }\n\n.ut-club-search-results-view .listFUTItem .auction .auction-state, .ut-club-search-results-view .listFUTItem .auction .auctionValue {\n  display: none; }\n  .ut-club-search-results-view .listFUTItem .auction .auction-state.futbin, .ut-club-search-results-view .listFUTItem .auction .auctionValue.futbin {\n    display: block; }\n\n.player-picks-modal .time {\n  display: block; }\n\n.ut-squad-slot-pedestal-view.futbin {\n  min-width: 58px;\n  flex: none;\n  width: auto;\n  bottom: -2.6em;\n  white-space: nowrap; }\n  .ut-squad-slot-pedestal-view.futbin .coins.value {\n    text-align: center;\n    margin: 0 8px; }\n\n.ut-squad-overview .ut-squad-summary {\n  width: 70%; }\n\n.refresh-squad-button {\n  margin: 17px 5px;\n  color: #e2dde2; }\n  .refresh-squad-button:before {\n    font-family: UltimateTeam-Icons,sans-serif;\n    content: '\\E051'; }\n", ""]);
 
 // exports
 
@@ -13841,7 +13840,7 @@ var FutbinPrices = exports.FutbinPrices = function (_BaseScript) {
 
       var controllerName = getAppMain().getRootViewController().getPresentedViewController().getCurrentViewController().getCurrentController().className;
 
-      if (screenId === 'SBCSquadSplitViewController' || screenId === 'SquadSplitViewController' || screenId === 'UTSquadSplitViewController' || screenId === 'UTSquadsHubViewController' || screenId === 'UTSBCSquadSplitViewController') {
+      if (screenId === 'SBCSquadSplitViewController' || screenId === 'SquadSplitViewController' || screenId === 'UTSquadSplitViewController' || screenId === 'UTSBCSquadSplitViewController') {
         if (this.getSettings()['show-sbc-squad'].toString() !== 'true') {
           return;
         }
@@ -13851,9 +13850,14 @@ var FutbinPrices = exports.FutbinPrices = function (_BaseScript) {
           _this2._show('SBCSquadSplitViewController', true);
         });
         if ($('.ut-squad-summary-info--right.ut-squad-summary-info').find('.futbin').length === 0) {
-          $('.ut-squad-summary-info--right.ut-squad-summary-info').append('\n        <div class="futbin total">\n          <span class="ut-squad-summary-label">Total BIN value</span>\n          <div style="text-align: right">\n            <span class="ut-squad-summary-value coins value">---</span>\n          </div>\n        </div>\n      ');
+          $('.ut-squad-summary-info--right.ut-squad-summary-info').append('\n        <div class="futbin total">\n          <span class="ut-squad-summary-label">Total BIN value</span>\n          <div style="text-align: right">\n            <span class="ut-squad-summary-value coins value">---</span>\n          </div>\n        </div>\n        <div class="futbin total">\n          <span class="ut-squad-summary-label">\n            <button class="refresh-squad-button">&nbsp;</button>\n          </span>\n        </div>\n      ');
+
+          $('.refresh-squad-button').click(function () {
+            _core.Database.set('lastFutbinFetchFail', 0);
+            _this2.onScreenRequest(screenId);
+          });
         }
-      } else if (this._squadObserver !== null && controllerName !== 'SBCSquadSplitViewController' && controllerName !== 'SquadSplitViewController' && controllerName !== 'UTSquadSplitViewController' && controllerName !== 'UTSquadsHubViewController' && controllerName !== 'UTSBCSquadSplitViewController') {
+      } else if (this._squadObserver !== null && controllerName !== 'SBCSquadSplitViewController' && controllerName !== 'SquadSplitViewController' && controllerName !== 'UTSquadSplitViewController' && controllerName !== 'UTSBCSquadSplitViewController') {
         this._squadObserver.unobserve(this);
       }
 
@@ -13881,160 +13885,28 @@ var FutbinPrices = exports.FutbinPrices = function (_BaseScript) {
 
       var force = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
-      var showFutbinPricePages = ['UTTransferListSplitViewController', // transfer list
+      var showFutbinPricePages = [
+      // Players
+      'UTTransferListSplitViewController', // transfer list
       'UTWatchListSplitViewController', // transfer targets
       'UTUnassignedItemsSplitViewController', // pack buy
       'ClubSearchResultsSplitViewController', // club
       'UTMarketSearchResultsSplitViewController', // market search
-      'UTPlayerPicksViewController', 'SBCSquadSplitViewController', 'SquadSplitViewController', 'UTSquadSplitViewController', 'UTSquadsHubViewController', 'UTSBCSquadSplitViewController'];
+      'UTPlayerPicksViewController',
+      // Squad
+      'SBCSquadSplitViewController', 'SquadSplitViewController', 'UTSquadSplitViewController', 'UTSBCSquadSplitViewController', 'UTTOTWSquadSplitViewController'];
 
       if (showFutbinPricePages.indexOf(screen) !== -1) {
         if (this._intervalRunning) {
           clearInterval(this._intervalRunning);
         }
-        this._intervalRunning = setInterval(function () {
-          var lastFutbinFetchFail = _core.Database.get('lastFutbinFetchFail', 0);
-          if (lastFutbinFetchFail + 5 * 60000 > Date.now()) {
-            console.log('Futbin fetching has been paused for 5 minutes because of failed requests earlier (retrying after ' + new Date(lastFutbinFetchFail + 5 * 60000).toLocaleTimeString() + '). Check on Github for known issues.'); // eslint-disable-line no-console
-            if (_this3._intervalRunning) {
-              clearInterval(_this3._intervalRunning);
-            }
-            return;
-          }
-          if (showFutbinPricePages.indexOf(window.currentPage) === -1 && !force) {
-            if (_this3._intervalRunning) {
-              clearInterval(_this3._intervalRunning);
-            }
-            return;
-          }
-          var controller = getAppMain().getRootViewController().getPresentedViewController().getCurrentViewController().getCurrentController();
-
-          var uiItems = null;
-          if (screen === 'SBCSquadSplitViewController' || screen === 'SquadSplitViewController' || screen === 'UTSquadSplitViewController' || screen === 'UTSquadsHubViewController' || screen === 'UTSBCSquadSplitViewController') {
-            uiItems = $(controller._view.__root).find('.squadSlot');
-
-            if (_this3.getSettings()['show-sbc-squad'].toString() !== 'true') {
-              return;
-            }
-          } else {
-            uiItems = $(getAppMain().getRootViewController().getPresentedViewController().getCurrentViewController()._view.__root).find('.listFUTItem');
-
-            var targetForButton = uiItems.find('.auction');
-            if (targetForButton !== null) {
-              targetForButton.show(); // make sure it's always shown (#69)
-            }
-          }
-
-          if ($(uiItems[0]).find('.futbin').length > 0) {
-            return;
-          }
-
-          var listController = null;
-          if (screen === 'SBCSquadSplitViewController' || screen === 'SquadSplitViewController' || screen === 'UTSquadSplitViewController' || screen === 'UTSquadsHubViewController' || screen === 'UTSBCSquadSplitViewController') {
-            // not needed
-          } else if (screen === 'UTPlayerPicksViewController') {
-            if (!controller.getPresentedViewController()) {
-              return;
-            }
-            if ($(controller.getPresentedViewController()._view.__root).find('.futbin').length > 0) {
-              // Futbin prices already shown
-              return;
-            }
-            listController = controller.getPresentedViewController();
-          } else if (screen === 'UTUnassignedItemsSplitViewController' || screen === 'UTWatchListSplitViewController') {
-            if (!controller || !controller._leftController || !controller._leftController._view) {
-              return;
-            }
-            listController = controller._leftController;
-          } else {
-            if (!controller || !controller._listController || !controller._listController._view) {
-              return; // only run if data is available
-            }
-            listController = controller._listController;
-          }
-
-          var listrows = null;
-          if (screen === 'SBCSquadSplitViewController' || screen === 'SquadSplitViewController' || screen === 'UTSquadSplitViewController' || screen === 'UTSquadsHubViewController' || screen === 'UTSBCSquadSplitViewController') {
-            listrows = controller._squad._players.slice(0, 11).map(function (p, index) {
-              return {
-                data: p._item,
-                target: controller._view._lView._slotViews[index].__root
-              };
-            });
-          } else if (listController._picks && screen === 'UTPlayerPicksViewController') {
-            listrows = listController._picks.map(function (pick, index) {
-              return {
-                data: pick,
-                target: listController._view._playerPickViews[index].__root
-              };
-            });
-          } else if (listController._view._list && listController._view._list._listRows && listController._view._list._listRows.length > 0) {
-            listrows = listController._view._list._listRows; // for transfer market and club search
-          } else if (listController._view._sections && listController._view._sections.length > 0) {
-            // for transfer list & trade pile
-            listController._view._sections.forEach(function (row) {
-              if (row._listRows.length > 0) {
-                if (listrows == null) {
-                  listrows = row._listRows;
-                } else {
-                  listrows = listrows.concat(row._listRows);
-                }
-              }
-            });
-          }
-
-          if (listrows === null) {
-            return;
-          }
-
-          var showBargains = _this3.getSettings()['show-bargains'].toString() === 'true';
-
-          var resourceIdMapping = [];
-          listrows.forEach(function (row, index) {
-            resourceIdMapping.push({
-              target: uiItems[index] || row.target,
-              playerId: row.data.resourceId,
-              item: row.data
-            });
-          });
-
-          var fetchedPlayers = 0;
-          var fetchAtOnce = 30;
-          var futbinlist = [];
-          while (resourceIdMapping.length > 0 && fetchedPlayers < resourceIdMapping.length && _core.Database.get('lastFutbinFetchFail', 0) + 5 * 60000 < Date.now()) {
-            var futbinUrl = 'https://www.futbin.com/21/playerPrices?player=&rids=' + resourceIdMapping.slice(fetchedPlayers, fetchedPlayers + fetchAtOnce).map(function (i) {
-              return i.playerId;
-            }).filter(function (current, next) {
-              return current !== next && current !== 0;
-            }).join(',');
-            fetchedPlayers += fetchAtOnce;
-            /* eslint-disable no-loop-func */
-            GM_xmlhttpRequest({
-              method: 'GET',
-              url: futbinUrl,
-              onload: function onload(res) {
-                if (res.status !== 200) {
-                  _core.Database.set('lastFutbinFetchFail', Date.now());
-                  GM_notification('Could not load Futbin prices (code ' + res.status + '), pausing fetches for 5 minutes. Disable Futbin integration if the problem persists.', 'Futbin fetch failed');
-                  return;
-                }
-
-                var futbinData = JSON.parse(res.response);
-                resourceIdMapping.forEach(function (item) {
-                  FutbinPrices._showFutbinPrice(screen, item, futbinData, showBargains);
-                  futbinlist.push(futbinData[item.playerId]);
-                });
-                var platform = _fut.utils.getPlatform();
-                if (screen === 'SBCSquadSplitViewController' || screen === 'SquadSplitViewController' || screen === 'UTSquadSplitViewController' || screen === 'UTSquadsHubViewController' || screen === 'UTSBCSquadSplitViewController') {
-                  var futbinTotal = futbinlist.reduce(function (sum, item) {
-                    return sum + parseInt(item.prices[platform].LCPrice.toString().replace(/[,.]/g, ''), 10) || 0;
-                  }, 0);
-                  $('.ut-squad-summary-value.coins.value').html('' + futbinTotal.toLocaleString());
-                }
-              }
-            });
-          }
-        }, 1000);
+        if (screen === 'SBCSquadSplitViewController' || screen === 'SquadSplitViewController' || screen === 'UTSquadSplitViewController' || screen === 'UTSquadsHubViewController' || screen === 'UTSBCSquadSplitViewController' || screen === 'UTTOTWSquadSplitViewController') {
+          this.loadFutbinPrices(showFutbinPricePages, screen, force);
+        } else {
+          this._intervalRunning = setInterval(function () {
+            _this3.loadFutbinPrices(showFutbinPricePages, screen, force);
+          }, 1000);
+        }
       } else {
         // no need to search prices on other pages
         // reset page
@@ -14042,6 +13914,151 @@ var FutbinPrices = exports.FutbinPrices = function (_BaseScript) {
           clearInterval(this._intervalRunning);
         }
         this._intervalRunning = null;
+      }
+    }
+  }, {
+    key: 'loadFutbinPrices',
+    value: function loadFutbinPrices(showFutbinPricePages, screen, force) {
+      var lastFutbinFetchFail = _core.Database.get('lastFutbinFetchFail', 0);
+      if (lastFutbinFetchFail + 5 * 60000 > Date.now()) {
+        console.log('Futbin fetching has been paused for 5 minutes because of failed requests earlier (retrying after ' + new Date(lastFutbinFetchFail + 5 * 60000).toLocaleTimeString() + '). Check on Github for known issues.'); // eslint-disable-line no-console
+        if (this._intervalRunning) {
+          clearInterval(this._intervalRunning);
+        }
+        return;
+      }
+      if (showFutbinPricePages.indexOf(window.currentPage) === -1 && !force) {
+        if (this._intervalRunning) {
+          clearInterval(this._intervalRunning);
+        }
+        return;
+      }
+      var controller = getAppMain().getRootViewController().getPresentedViewController().getCurrentViewController().getCurrentController();
+
+      var uiItems = null;
+      if (screen === 'SBCSquadSplitViewController' || screen === 'SquadSplitViewController' || screen === 'UTSquadSplitViewController' || screen === 'UTSquadsHubViewController' || screen === 'UTSBCSquadSplitViewController' || screen === 'UTTOTWSquadSplitViewController') {
+        uiItems = $(controller._view.__root).find('.squadSlot');
+
+        if (this.getSettings()['show-sbc-squad'].toString() !== 'true') {
+          return;
+        }
+      } else {
+        uiItems = $(getAppMain().getRootViewController().getPresentedViewController().getCurrentViewController()._view.__root).find('.listFUTItem');
+
+        var targetForButton = uiItems.find('.auction');
+        if (targetForButton !== null) {
+          targetForButton.show(); // make sure it's always shown (#69)
+        }
+      }
+
+      if ($(uiItems[0]).find('.futbin').length > 0) {
+        return;
+      }
+
+      var listController = null;
+      if (screen === 'SBCSquadSplitViewController' || screen === 'SquadSplitViewController' || screen === 'UTSquadSplitViewController' || screen === 'UTSBCSquadSplitViewController' || screen === 'UTTOTWSquadSplitViewController') {
+        // not needed
+      } else if (screen === 'UTPlayerPicksViewController') {
+        if (!controller.getPresentedViewController()) {
+          return;
+        }
+        if ($(controller.getPresentedViewController()._view.__root).find('.futbin').length > 0) {
+          // Futbin prices already shown
+          return;
+        }
+        listController = controller.getPresentedViewController();
+      } else if (screen === 'UTUnassignedItemsSplitViewController' || screen === 'UTWatchListSplitViewController') {
+        if (!controller || !controller._leftController || !controller._leftController._view) {
+          return;
+        }
+        listController = controller._leftController;
+      } else {
+        if (!controller || !controller._listController || !controller._listController._view) {
+          return; // only run if data is available
+        }
+        listController = controller._listController;
+      }
+
+      var listrows = null;
+      if (screen === 'SBCSquadSplitViewController' || screen === 'SquadSplitViewController' || screen === 'UTSquadSplitViewController' || screen === 'UTSBCSquadSplitViewController' || screen === 'UTTOTWSquadSplitViewController') {
+        listrows = controller._squad._players.slice(0, 11).map(function (p, index) {
+          return {
+            data: p._item,
+            target: controller._view._lView._slotViews[index].__root
+          };
+        });
+      } else if (listController._picks && screen === 'UTPlayerPicksViewController') {
+        listrows = listController._picks.map(function (pick, index) {
+          return {
+            data: pick,
+            target: listController._view._playerPickViews[index].__root
+          };
+        });
+      } else if (listController._view._list && listController._view._list._listRows && listController._view._list._listRows.length > 0) {
+        listrows = listController._view._list._listRows; // for transfer market and club search
+      } else if (listController._view._sections && listController._view._sections.length > 0) {
+        // for transfer list & trade pile
+        listController._view._sections.forEach(function (row) {
+          if (row._listRows.length > 0) {
+            if (listrows == null) {
+              listrows = row._listRows;
+            } else {
+              listrows = listrows.concat(row._listRows);
+            }
+          }
+        });
+      }
+
+      if (listrows === null) {
+        return;
+      }
+
+      var showBargains = this.getSettings()['show-bargains'].toString() === 'true';
+
+      var resourceIdMapping = [];
+      listrows.forEach(function (row, index) {
+        resourceIdMapping.push({
+          target: uiItems[index] || row.target,
+          playerId: row.data.resourceId,
+          item: row.data
+        });
+      });
+
+      var fetchedPlayers = 0;
+      var fetchAtOnce = 30;
+      var futbinlist = [];
+      while (resourceIdMapping.length > 0 && fetchedPlayers < resourceIdMapping.length && _core.Database.get('lastFutbinFetchFail', 0) + 5 * 60000 < Date.now()) {
+        var futbinUrl = 'https://www.futbin.com/21/playerPrices?player=&rids=' + resourceIdMapping.slice(fetchedPlayers, fetchedPlayers + fetchAtOnce).map(function (i) {
+          return i.playerId;
+        }).filter(function (current, next) {
+          return current !== next && current !== 0;
+        }).join(',');
+        fetchedPlayers += fetchAtOnce;
+        /* eslint-disable no-loop-func */
+        GM_xmlhttpRequest({
+          method: 'GET',
+          url: futbinUrl,
+          onload: function onload(res) {
+            if (res.status !== 200) {
+              _core.Database.set('lastFutbinFetchFail', Date.now());
+              GM_notification('Could not load Futbin prices (code ' + res.status + '), pausing fetches for 5 minutes. Disable Futbin integration if the problem persists.', 'Futbin fetch failed');
+              return;
+            }
+
+            var futbinData = JSON.parse(res.response);
+            resourceIdMapping.forEach(function (item) {
+              FutbinPrices._showFutbinPrice(screen, item, futbinData, showBargains);
+              futbinlist.push(futbinData[item.playerId]);
+            });
+            var platform = _fut.utils.getPlatform();
+            if (screen === 'SBCSquadSplitViewController' || screen === 'SquadSplitViewController' || screen === 'UTSquadSplitViewController' || screen === 'UTSBCSquadSplitViewController') {
+              var futbinTotal = futbinlist.reduce(function (sum, item) {
+                return sum + parseInt(item.prices[platform].LCPrice.toString().replace(/[,.]/g, ''), 10) || 0;
+              }, 0);
+              $('.ut-squad-summary-value.coins.value').html('' + futbinTotal.toLocaleString());
+            }
+          }
+        });
       }
     }
   }], [{
@@ -14094,7 +14111,7 @@ var FutbinPrices = exports.FutbinPrices = function (_BaseScript) {
               case 12:
                 futbinText = 'Futbin BIN';
                 _context.t0 = screen;
-                _context.next = _context.t0 === 'SBCSquadSplitViewController' ? 16 : _context.t0 === 'SquadSplitViewController' ? 16 : _context.t0 === 'UTSquadSplitViewController' ? 16 : _context.t0 === 'UTSquadsHubViewController' ? 16 : _context.t0 === 'UTSBCSquadSplitViewController' ? 16 : _context.t0 === 'UTPlayerPicksViewController' ? 18 : _context.t0 === 'UTTransferListSplitViewController' ? 20 : _context.t0 === 'UTWatchListSplitViewController' ? 20 : _context.t0 === 'UTUnassignedItemsSplitViewController' ? 20 : _context.t0 === 'ClubSearchResultsSplitViewController' ? 20 : _context.t0 === 'UTMarketSearchResultsSplitViewController' ? 20 : _context.t0 === 'SearchResults' ? 25 : 28;
+                _context.next = _context.t0 === 'SBCSquadSplitViewController' ? 16 : _context.t0 === 'SquadSplitViewController' ? 16 : _context.t0 === 'UTSquadSplitViewController' ? 16 : _context.t0 === 'UTSBCSquadSplitViewController' ? 16 : _context.t0 === 'UTTOTWSquadSplitViewController' ? 16 : _context.t0 === 'UTPlayerPicksViewController' ? 18 : _context.t0 === 'UTTransferListSplitViewController' ? 20 : _context.t0 === 'UTWatchListSplitViewController' ? 20 : _context.t0 === 'UTUnassignedItemsSplitViewController' ? 20 : _context.t0 === 'ClubSearchResultsSplitViewController' ? 20 : _context.t0 === 'UTMarketSearchResultsSplitViewController' ? 20 : _context.t0 === 'SearchResults' ? 25 : 28;
                 break;
 
               case 16:
