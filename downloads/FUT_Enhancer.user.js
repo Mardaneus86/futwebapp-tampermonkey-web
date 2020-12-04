@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        FUT Enhancer
-// @version     2.0.3
+// @version     2.0.4
 // @description Enhances the FIFA Ultimate Team 21 Web app. Includes Futbin integration and other useful tools
 // @license     MIT
 // @author      Tim Klingeleers
@@ -4602,7 +4602,7 @@
   
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
   
-  /* globals PIN_PAGEVIEW_EVT_TYPE services enums */
+  /* globals PIN_PAGEVIEW_EVT_TYPE services PINEventType */
   
   var PinEvent = exports.PinEvent = function () {
     function PinEvent() {
@@ -4616,7 +4616,7 @@
   
         return new Promise(function (resolve) {
           return setTimeout(function () {
-            services.PIN.sendData(enums.PIN.EVENT.PAGE_VIEW, {
+            services.PIN.sendData(PINEventType.PAGE_VIEW, {
               type: PIN_PAGEVIEW_EVT_TYPE,
               pgid: pageId
             });
